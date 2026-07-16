@@ -1,0 +1,392 @@
+[
+ {
+  "point": "使役のhave（have+目的語+過去分詞）",
+  "en": "\"And she'll ___ my tail cut off, and my horns sawn off, and my beard plucked out.\"",
+  "choices": [
+   "have",
+   "make",
+   "let",
+   "get to"
+  ],
+  "answer": "have",
+  "explain": "have+O+過去分詞で「Oを〜される（させる）」。ここでは「尻尾を切り落とさせる」＝被害を表す使役。makeやletはこの形では使えない。",
+  "chapter": 2
+ },
+ {
+  "point": "仮定法過去（If only + 過去形）",
+  "en": "\"___ I had worked harder at geography when I was a little Faun, I should no doubt know all about those strange countries.\"",
+  "choices": [
+   "If only",
+   "Even if",
+   "As if",
+   "Unless"
+  ],
+  "answer": "If only",
+  "explain": "If only + 過去形（ここでは過去完了）で「〜さえしていたら（残念ながら実際はしなかった）」という後悔を表す仮定法。",
+  "chapter": 2
+ },
+ {
+  "point": "as if + 仮定法過去",
+  "en": "Mr Tumnus turned suddenly aside as if he ___ going to walk straight into an unusually large rock.",
+  "choices": [
+   "were",
+   "was",
+   "is",
+   "had been"
+  ],
+  "answer": "were",
+  "explain": "as if の後の仮定法では、be動詞は人称に関わらずwereを使うのが伝統的用法（口語ではwasも可）。",
+  "chapter": 2
+ },
+ {
+  "point": "so...that構文",
+  "en": "He was ___ odd-looking that Lucy was a little afraid of him.",
+  "choices": [
+   "so",
+   "such",
+   "too",
+   "very"
+  ],
+  "answer": "so",
+  "explain": "so + 形容詞 + that ... で「とても〜なので…」。名詞が続く場合はsuchを使うが、ここはodd-looking（形容詞）なのでso。",
+  "chapter": 1
+ },
+ {
+  "point": "such+a+形容詞+名詞",
+  "en": "\"I'm crying because I'm ___ bad Faun.\"",
+  "choices": [
+   "such a",
+   "so a",
+   "too a",
+   "as a"
+  ],
+  "answer": "such a",
+  "explain": "such + a + 形容詞 + 単数名詞の語順。soの後には冠詞+名詞を直接続けられない（so bad a Faunという倒置形は文語のみ）。",
+  "chapter": 2
+ },
+ {
+  "point": "関係代名詞（人・主格）",
+  "en": "He lived with a housekeeper called Mrs Macready and three servants ___ names were Ivy, Margaret and Betty.",
+  "choices": [
+   "whose",
+   "who",
+   "which",
+   "that"
+  ],
+  "answer": "whose",
+  "explain": "「使用人たちの名前」＝所有格の関係代名詞whose + 名詞。who/whichは所有格として名詞を直接修飾できない。",
+  "chapter": 1
+ },
+ {
+  "point": "関係代名詞の省略（目的格）",
+  "en": "It was the sort of house ___ you never seem to come to the end of.",
+  "choices": [
+   "that",
+   "who",
+   "whom",
+   "whose"
+  ],
+  "answer": "that",
+  "explain": "先行詞the sort of houseは物なのでthat（またはwhich）。人を表すwho/whomは使えない。",
+  "chapter": 1
+ },
+ {
+  "point": "現在完了（継続）",
+  "en": "\"But I've ___ away for hours and hours,\" said Lucy.",
+  "choices": [
+   "been",
+   "gone",
+   "went",
+   "be"
+  ],
+  "answer": "been",
+  "explain": "have been away で「（今も含めて）ずっと出かけている」という継続用法。have goneは「行ってしまって今ここにいない」の意味になり不適切。",
+  "chapter": 3
+ },
+ {
+  "point": "過去完了（大過去）",
+  "en": "By the time the sledge swept out of sight, Edmund realized what he ___.",
+  "choices": [
+   "had done",
+   "did",
+   "has done",
+   "was doing"
+  ],
+  "answer": "had done",
+  "explain": "「そりが去った」という過去の一時点より前に「したこと」を表すので過去完了（had done）で時制を一つ前にずらす。",
+  "chapter": 3
+ },
+ {
+  "point": "It is ... who 強調構文",
+  "en": "\"It's she ___ makes it always winter,\" said Mr Tumnus about the White Witch.",
+  "choices": [
+   "who",
+   "what",
+   "which",
+   "whom"
+  ],
+  "answer": "who",
+  "explain": "It is 人 who ... の強調構文で、主語shirtを強調している。先行詞が人（she）なのでwho。",
+  "chapter": 2
+ },
+ {
+  "point": "最上級＋現在完了（経験）",
+  "en": "\"You are the nicest faun I've ever ___.\"",
+  "choices": [
+   "met",
+   "meet",
+   "meeting",
+   "to meet"
+  ],
+  "answer": "met",
+  "explain": "the nicest ... (that) I have ever + 過去分詞 は「今まで出会った中で一番〜」という最上級を強調する定番表現。",
+  "chapter": 2
+ },
+ {
+  "point": "the 比較級 ..., the 比較級 ...",
+  "en": "___ he ate, the more he wanted to eat.",
+  "choices": [
+   "The more",
+   "More",
+   "The most",
+   "As more"
+  ],
+  "answer": "The more",
+  "explain": "「the+比較級, the+比較級」で「〜すればするほど…」。主節・従属節どちらもthe+比較級で始める。",
+  "chapter": 4
+ },
+ {
+  "point": "so as not to + 動詞原形（目的の否定）",
+  "en": "She kept her arms stretched out in front of her ___ bump her face into the back of the wardrobe.",
+  "choices": [
+   "so as not to",
+   "so as to not",
+   "in order not",
+   "for not to"
+  ],
+  "answer": "so as not to",
+  "explain": "「〜しないように」という否定の目的は so as not to + 動詞原形（またはin order not to）。not toの語順に注意。",
+  "chapter": 1
+ },
+ {
+  "point": "too...to構文",
+  "en": "He was ___ confused by this time to understand what the question meant.",
+  "choices": [
+   "too",
+   "so",
+   "very",
+   "such"
+  ],
+  "answer": "too",
+  "explain": "too + 形容詞 + to do で「あまりに〜なので…できない」。soやveryはto不定詞と直接結びつかない。",
+  "chapter": 4
+ },
+ {
+  "point": "instead of + 動名詞",
+  "en": "Instead of ___ the hard, smooth wood of the wardrobe floor, she felt something soft and cold.",
+  "choices": [
+   "feeling",
+   "feel",
+   "felt",
+   "to feel"
+  ],
+  "answer": "feeling",
+  "explain": "前置詞instead ofの後は動名詞（-ing形）が続く。",
+  "chapter": 1
+ },
+ {
+  "point": "used to / would（過去の習慣）",
+  "en": "In summer, old Silenus on his fat donkey ___ come to visit them, and sometimes Bacchus himself.",
+  "choices": [
+   "would",
+   "used to be",
+   "was",
+   "did"
+  ],
+  "answer": "would",
+  "explain": "would+動詞原形で「（当時）よく〜したものだ」という過去の習慣的動作を表す（状態には使わずused toの方が近い場合もあるが、動作の反復にはwouldが自然）。",
+  "chapter": 2
+ },
+ {
+  "point": "不定詞の目的（〜するために）",
+  "en": "Edmund wanted to laugh and had to keep on pretending he was blowing his nose ___ it.",
+  "choices": [
+   "to hide",
+   "for hiding",
+   "hiding",
+   "hide"
+  ],
+  "answer": "to hide",
+  "explain": "「〜するために」という目的はto不定詞で表す。for -ingは目的ではなく用途・理由を表す場合に使う。",
+  "chapter": 1
+ },
+ {
+  "point": "had better + 動詞原形",
+  "en": "\"Hadn't we all ___ go to bed?\" said Lucy.",
+  "choices": [
+   "better",
+   "best",
+   "rather",
+   "more"
+  ],
+  "answer": "better",
+  "explain": "had better + 動詞原形で「〜したほうがよい」。否定形はhad better not。",
+  "chapter": 1
+ },
+ {
+  "point": "仮定法過去（現在の事実に反する仮定）",
+  "en": "\"If I took you there now,\" said the Queen, \"I ___ see your brother and sisters.\"",
+  "choices": [
+   "shouldn't",
+   "won't",
+   "don't",
+   "haven't"
+  ],
+  "answer": "shouldn't",
+  "explain": "If+過去形, 主語+should/would/could+動詞原形 の仮定法過去。現在・未来の事実に反する仮定を表す（should=wouldのイギリス英語的用法）。",
+  "chapter": 4
+ },
+ {
+  "point": "強調のdo",
+  "en": "\"I ___ hope you won't get into dreadful trouble on my account,\" said Lucy.",
+  "choices": [
+   "do",
+   "am",
+   "will",
+   "shall"
+  ],
+  "answer": "do",
+  "explain": "一般動詞の前にdo/does/didを置くと「本当に、心から」という強調になる。",
+  "chapter": 2
+ },
+ {
+  "point": "There is nothing for it but to + 動詞原形",
+  "en": "There was nothing for it ___ jump into the wardrobe and hold the door closed.",
+  "choices": [
+   "but to",
+   "except",
+   "than to",
+   "but"
+  ],
+  "answer": "but to",
+  "explain": "There is nothing for it but to do で「〜する以外に方法がない」という定型表現。",
+  "chapter": 3
+ },
+ {
+  "point": "感覚動詞＋現在分詞",
+  "en": "Something cold and soft was ___ on her.",
+  "choices": [
+   "falling",
+   "fallen",
+   "fall",
+   "to fall"
+  ],
+  "answer": "falling",
+  "explain": "be動詞+現在分詞で進行中の動作を表す。過去進行形was fallingで「（そのとき）降っていた」。",
+  "chapter": 1
+ },
+ {
+  "point": "make+O+形容詞",
+  "en": "Being tired and pretending not to be tired always ___ him bad-tempered.",
+  "choices": [
+   "made",
+   "did",
+   "got",
+   "had"
+  ],
+  "answer": "made",
+  "explain": "make+目的語+形容詞で「〜を…（の状態）にする」。ここではmade him bad-tempered「彼を不機嫌にした」。",
+  "chapter": 1
+ },
+ {
+  "point": "neither...nor（相関接続詞）",
+  "en": "You could see ___ the mountains ___ the woods because of the thick rain.",
+  "choices": [
+   "neither / nor",
+   "either / or",
+   "not / nor",
+   "no / or"
+  ],
+  "answer": "neither / nor",
+  "explain": "neither A nor B で「AもBも〜ない」。both...andの否定版として覚える。",
+  "chapter": 1
+ },
+ {
+  "point": "過去分詞の受け身修飾（分詞形容詞）",
+  "en": "The White Witch's sledge, ___ by two reindeer, swept into sight.",
+  "choices": [
+   "drawn",
+   "drawing",
+   "draw",
+   "to draw"
+  ],
+  "answer": "drawn",
+  "explain": "過去分詞drawnが名詞sledgeを後置修飾し、「（トナカイに）引かれたそり」という受け身の意味を表す。",
+  "chapter": 3
+ },
+ {
+  "point": "付加疑問文（tag question）",
+  "en": "\"It would be fun to keep it a secret between us two, wouldn't it?\" -- 付加疑問文の作り方を確認：肯定文には___の付加疑問がつく。",
+  "choices": [
+   "否定形",
+   "肯定形",
+   "同じ形",
+   "疑問形"
+  ],
+  "answer": "否定形",
+  "explain": "付加疑問文は、肯定文には否定の短縮形（wouldn't it?のように）、否定文には肯定形をつける。",
+  "chapter": 4
+ },
+ {
+  "point": "現在分詞の分詞構文（付帯状況）",
+  "en": "___ her face very red, Lucy tried to say something and burst into tears.",
+  "choices": [
+   "Growing",
+   "Grown",
+   "Grow",
+   "To grow"
+  ],
+  "answer": "Growing",
+  "explain": "分詞構文は「〜しながら／〜なので」と主節に付帯状況・理由を添える。能動の意味なので現在分詞Growingを使う。",
+  "chapter": 3
+ },
+ {
+  "point": "whatever（譲歩の複合関係詞）",
+  "en": "\"I see you are an idiot, ___ else you may be,\" said the Queen.",
+  "choices": [
+   "whatever",
+   "whichever",
+   "however",
+   "whoever"
+  ],
+  "answer": "whatever",
+  "explain": "whatever + 主語 + 動詞で「たとえ何が〜であろうと」という譲歩の意味。ここでは「他に何であろうと」。",
+  "chapter": 4
+ },
+ {
+  "point": "not...at all（強い否定）",
+  "en": "\"But they aren't countries ___,\" said Lucy, almost laughing.",
+  "choices": [
+   "at all",
+   "at least",
+   "at once",
+   "at last"
+  ],
+  "answer": "at all",
+  "explain": "not ... at all で「全く〜ない」という否定を強める表現。",
+  "chapter": 2
+ },
+ {
+  "point": "wish + 仮定法過去完了 の言い換え（if only）",
+  "en": "If only 構文とwish構文はほぼ同じ意味。\"I wish I had worked harder\" を If only で書き換えると：",
+  "choices": [
+   "If only I had worked harder.",
+   "If only I work harder.",
+   "If only I would work harder.",
+   "If only I have worked harder."
+  ],
+  "answer": "If only I had worked harder.",
+  "explain": "過去の後悔を表す場合、wish/If onlyのどちらも後ろは過去完了形（had+過去分詞）を使う。",
+  "chapter": 2
+ }
+]
