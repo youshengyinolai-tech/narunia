@@ -1743,7 +1743,8 @@ function narniaExampleAudioHtml(vi){
   const ex = VOCAB_EXTRA[vi];
   if(!ex || !ex.audio) return '';
   const src = 'e'+ex.audio;
-  return `<button type="button" class="audiobtn" onclick="playNarniaAudio(event,'${src}')" title="例文をもう一度聞く">🔊</button><audio src="word_audio/${src}.m4a" autoplay style="display:none;"></audio>`;
+  // 例文の音声は自動再生しない（🔊ボタンでの手動再生のみ）。
+  return `<button type="button" class="audiobtn" onclick="playNarniaAudio(event,'${src}')" title="もう一度聞く">🔊</button>`;
 }
 function s1800ExplainEl(vi, onNext){
   const item = VOCAB[vi];
