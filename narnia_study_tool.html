@@ -145,9 +145,35 @@
   .timerbar{height:6px; border-radius:4px; background:var(--line); overflow:hidden; margin-bottom:14px;}
   .timerbar-fill{height:100%; background:var(--accent); transition:width 0.08s linear;}
   .s1800FinalCard{background:linear-gradient(135deg, var(--accent-bg), var(--card)); border:1px solid var(--accent); border-radius:12px; padding:18px; margin-bottom:18px;}
+  /* ---- スマホ版・パソコン版UI ----
+     既定は window幅で自動判定するが、右上の切り替えボタンで
+     data-uimode="mobile"/"pc" を強制指定できる（localStorageに保存）。
+     @media ではなく <html data-uimode="…"> 属性セレクタで切り替える。 */
+  .uimodebtn{
+    position:fixed; top:10px; right:10px; z-index:30;
+    border:1px solid var(--accent); background:var(--card); color:var(--accent);
+    padding:7px 12px; border-radius:999px; cursor:pointer; font-size:12px; font-weight:700;
+    box-shadow:0 2px 0 var(--line);
+  }
+  .uimodebtn:hover{ background:var(--accent); color:#fff; }
+  html[data-uimode="mobile"] .wrap{ max-width:480px; }
+  html[data-uimode="mobile"] .charGrid,
+  html[data-uimode="mobile"] .s1800Grid,
+  html[data-uimode="mobile"] .matchGrid{ grid-template-columns:repeat(2, 1fr); }
+  html[data-uimode="pc"] .wrap{ max-width:1080px; }
+  html[data-uimode="pc"] h1{ font-size:26px; }
+  html[data-uimode="pc"] .card{ padding:28px 32px; }
+  html[data-uimode="pc"] .en{ font-size:18px; }
+  html[data-uimode="pc"] .term{ font-size:26px; }
+  html[data-uimode="pc"] .gloss-big{ font-size:24px; }
+  html[data-uimode="pc"] .charGrid{ grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); }
+  html[data-uimode="pc"] .s1800Grid{ grid-template-columns:repeat(auto-fill, minmax(170px,1fr)); }
+  html[data-uimode="pc"] .matchGrid{ grid-template-columns:repeat(auto-fill, minmax(130px,1fr)); }
+  html[data-uimode="pc"] .statrow .stat{ min-width:130px; }
 </style>
 </head>
 <body>
+<button type="button" id="uiModeToggle" class="uimodebtn" onclick="cycleUiMode()"></button>
 <div class="wrap">
   <h1>ナルニア国物語 期末試験対策ツール</h1>
   <p class="lead">授業でマーカーが引かれた語句・表現と、一緒に訳読・読解の練習ができます。間隔反復と苦手問題の自動復習つき。</p>
@@ -321,6 +347,46 @@ function fireConfetti(container){
   }
   container.appendChild(wrap);
 }
+
+/* ============================================================
+   スマホ版・パソコン版UIの切り替え
+   ------------------------------------------------------------
+   既定は「自動」= window幅で判定（700px未満はスマホ版・以上は
+   パソコン版）。右上のボタンで 自動→スマホ固定→パソコン固定→自動
+   と手動切り替えでき、選択はlocalStorageに保存されて次回も復元
+   される。<html data-uimode="mobile|pc"> 属性に応じてCSS側で
+   レイアウトを出し分ける。
+   ============================================================ */
+const UI_MODE_KEY = 'narniaUiMode_v1'; // 'auto' | 'mobile' | 'pc'
+const UI_MODE_BREAKPOINT = 700; // このpx未満は自動判定でスマホ版になる
+function getUiModePref(){
+  try{ return localStorage.getItem(UI_MODE_KEY) || 'auto'; }catch(e){ return 'auto'; }
+}
+function setUiModePref(pref){
+  try{ localStorage.setItem(UI_MODE_KEY, pref); }catch(e){ /* 保存できない環境では無視 */ }
+}
+function computeEffectiveUiMode(pref){
+  if(pref==='mobile' || pref==='pc') return pref;
+  return window.innerWidth >= UI_MODE_BREAKPOINT ? 'pc' : 'mobile';
+}
+function applyUiMode(){
+  const pref = getUiModePref();
+  const effective = computeEffectiveUiMode(pref);
+  document.documentElement.setAttribute('data-uimode', effective);
+  const btn = document.getElementById('uiModeToggle');
+  if(btn){
+    const labels = { auto: `🔁 自動（${effective==='pc'?'💻':'📱'}）`, mobile: '📱 スマホ版固定', pc: '💻 パソコン版固定' };
+    btn.textContent = labels[pref];
+    btn.title = 'タップでスマホ版⇔パソコン版の表示を切り替えます（自動判定に戻すこともできます）';
+  }
+}
+function cycleUiMode(){
+  const pref = getUiModePref();
+  const next = pref==='auto' ? 'mobile' : pref==='mobile' ? 'pc' : 'auto';
+  setUiModePref(next);
+  applyUiMode();
+}
+window.addEventListener('resize', applyUiMode);
 
 // ---------- Leitner spaced repetition (vocab) ----------
 const BOX_INTERVAL_DAYS = [0, 0, 1, 2, 4, 7, 14];
@@ -1748,6 +1814,7 @@ document.querySelectorAll('.tab').forEach(tab=>{
 });
 
 (async function init(){
+  applyUiMode();
   await store.load();
   updateStats();
   buildVocabOrder(); renderVocabRoot();
