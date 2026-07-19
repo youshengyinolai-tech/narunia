@@ -18,6 +18,9 @@
     --bad:#a32d2d;
     --bad-bg:#fcebeb;
     --mark:#fde68a;
+    --ice:#9fc4dd;
+    --ice-bg:#eaf3fa;
+    --ice-crack:#5c7186;
     font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
   }
   *{box-sizing:border-box;}
@@ -172,6 +175,40 @@
   html[data-uimode="pc"] .s1800Grid{ grid-template-columns:repeat(auto-fill, minmax(170px,1fr)); }
   html[data-uimode="pc"] .matchGrid{ grid-template-columns:repeat(auto-fill, minmax(130px,1fr)); }
   html[data-uimode="pc"] .statrow .stat{ min-width:130px; }
+  /* ---- Tumnus's hint scaffolding (underline tab) ---- */
+  .tumnusHint{background:var(--accent-bg); border-left:3px solid var(--accent); margin-top:10px;}
+
+  /* ---- White Witch's Frozen Vault (review tab) ---- */
+  .iceCard{position:relative;}
+  .iceStatus{font-size:13px; font-weight:700; padding:6px 10px; border-radius:8px; margin-bottom:12px; display:inline-block;}
+  .iceStatus.frozen{background:var(--ice-bg); color:var(--ice-crack);}
+  .iceStatus.cracked{background:#fdf0d5; color:#a3702d;}
+  @keyframes iceShatterAnim{
+    0%{ transform:scale(1); filter:brightness(1); }
+    30%{ transform:scale(1.02); filter:brightness(1.15); }
+    100%{ transform:scale(1); filter:brightness(1); }
+  }
+  .iceCard.iceShatter{ animation:iceShatterAnim 0.5s ease; }
+
+  /* ---- Melting Map tab ---- */
+  .mapOverallBar{height:14px; border-radius:8px; background:var(--ice-bg); border:1px solid var(--ice); overflow:hidden;}
+  .mapOverallFill{height:100%; background:linear-gradient(90deg, var(--good), #7bab3d); transition:width 0.4s ease;}
+  .mapGrid{display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:16px;}
+  .mapTile{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px; text-align:center;}
+  .mapTile.cleared{border-color:var(--good); box-shadow:0 0 0 1px var(--good) inset;}
+  .mapTileArt{position:relative; border-radius:8px; overflow:hidden; margin-bottom:8px;}
+  .mapTileArt svg{display:block; width:100%; height:auto;}
+  .mapSnowOverlay{position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,0.92), rgba(223,233,240,0.75)); transition:opacity 0.4s ease; pointer-events:none;}
+  .mapAslan{position:absolute; top:6px; right:8px; font-size:22px; filter:drop-shadow(0 1px 1px rgba(0,0,0,0.3));}
+  .mapTileTitle{font-size:13px; font-weight:700; margin-bottom:6px;}
+  .mapTileBar{height:8px; border-radius:6px; background:var(--line); overflow:hidden; margin-bottom:4px;}
+  .mapTileFill{height:100%; background:var(--accent); transition:width 0.4s ease;}
+
+  /* ---- Aslan's Roar (speech shadowing) ---- */
+  .shadowResult{display:block; font-size:13px; margin-top:6px;}
+  .shadowResult.listening{color:var(--sub);}
+  .shadowResult.good{color:var(--good); font-weight:700;}
+  .shadowResult.bad{color:var(--bad);}
 </style>
 </head>
 <body>
@@ -191,6 +228,7 @@
     <div class="tab" data-tab="speed1800">速習1800</div>
     <div class="tab" data-tab="summary">まとめ</div>
     <div class="tab" data-tab="review">復習<span class="badge" id="reviewBadge" style="display:none"></span></div>
+    <div class="tab" data-tab="map">ナルニアの地図</div>
   </div>
 
   <div class="panel active" id="panel-vocab">
@@ -249,6 +287,10 @@
   <div class="panel" id="panel-review">
     <div id="reviewArea"></div>
   </div>
+
+  <div class="panel" id="panel-map">
+    <div id="mapArea"></div>
+  </div>
 </div>
 
 <script>
@@ -273,14 +315,28 @@ function defaultData(){
     underlineDone: {},       // idx -> true
     underlineWrong: {},      // idx -> true
     quizWrong: {},           // idx -> true
+    quizDone: {},            // idx -> true (ever answered correctly)
     quizScore: {correct:0, total:0},
     grammarWrong: {},        // idx -> true
+    grammarDone: {},         // idx -> true (ever answered correctly)
     grammarScore: {correct:0, total:0},
     comprehensionWrong: {},  // idx -> true
+    comprehensionDone: {},   // idx -> true (ever answered correctly)
     comprehensionScore: {correct:0, total:0},
     kotestWrong: {},         // idx -> true
     kotestScore: {correct:0, total:0},
+    reviewStreak: {},        // "cat:idx" -> consecutive correct count in Review tab
   };
+}
+
+// Older saved progress (localStorage) predates some of these fields; fill
+// in anything missing without touching what's already there.
+function ensureData(){
+  const d = store.data;
+  d.quizDone = d.quizDone || {};
+  d.grammarDone = d.grammarDone || {};
+  d.comprehensionDone = d.comprehensionDone || {};
+  d.reviewStreak = d.reviewStreak || {};
 }
 
 const store = {
@@ -744,6 +800,27 @@ function buildUnderlineOrder(){
   underlineIdx = 0;
 }
 
+// Mr Tumnus's interpreter lesson: pull the vocab words already <mark>-ed
+// inside this sentence (same markup the vocab tab uses) and reveal their
+// glosses one at a time, instead of jumping straight to the full answer.
+function tumnusHints(item){
+  const seen = new Set();
+  const hints = [];
+  const marks = item.enHtml.match(/<mark>([\s\S]*?)<\/mark>/g) || [];
+  marks.forEach(m=>{
+    const term = m.replace(/<mark>|<\/mark>/g,'').replace(/<[^>]+>/g,'').trim();
+    if(!term || seen.has(term.toLowerCase())) return;
+    const v = VOCAB.find(v=>v.term.toLowerCase() === term.toLowerCase());
+    if(v && v.gloss){
+      seen.add(term.toLowerCase());
+      hints.push({term:v.term, gloss:v.gloss});
+    }
+  });
+  return hints;
+}
+
+let underlineHintsShown = 0;
+
 function renderUnderline(){
   const area = document.getElementById('underlineArea');
   if(underlineOrder.length===0){
@@ -753,12 +830,16 @@ function renderUnderline(){
   if(underlineIdx >= underlineOrder.length) underlineIdx = 0;
   const gi = underlineOrder[underlineIdx];
   const item = UNDERLINE[gi];
+  const hints = tumnusHints(item);
+  underlineHintsShown = 0;
   area.innerHTML = `
     <div class="progress">${underlineIdx+1} / ${underlineOrder.length}（第${item.chapter}章）：下線部を日本語に訳してみましょう。</div>
     <div class="card">
       <div class="en">${item.enHtml}</div>
       <textarea id="ansBox" placeholder="下線部の日本語訳を入力"></textarea>
+      <div id="tumnusHintArea"></div>
       <div class="btnrow">
+        ${hints.length ? '<button id="tumnusHintBtn">🐐 タムナスさんにヒントをもらう</button>' : ''}
         <button class="primary" id="showAns">答えを見る</button>
       </div>
       <div class="reveal" id="revealArea" style="display:none">
@@ -771,6 +852,22 @@ function renderUnderline(){
       </div>
     </div>
   `;
+  const hintBtn = document.getElementById('tumnusHintBtn');
+  if(hintBtn){
+    hintBtn.onclick = ()=>{
+      if(underlineHintsShown >= hints.length) return;
+      underlineHintsShown++;
+      const shown = hints.slice(0, underlineHintsShown);
+      document.getElementById('tumnusHintArea').innerHTML =
+        `<div class="explain tumnusHint">🐐「${shown.map(h=>`<b>${escapeHtml(h.term)}</b>＝${escapeHtml(h.gloss)}`).join('　／　')}」</div>`;
+      if(underlineHintsShown >= hints.length){
+        hintBtn.disabled = true;
+        hintBtn.textContent = '💡 ヒントは全部出したよ（もう一声はこの下の「答えを見る」で）';
+      } else {
+        hintBtn.textContent = `🐐 もう少しヒントをもらう（${underlineHintsShown}/${hints.length}）`;
+      }
+    };
+  }
   document.getElementById('showAns').onclick = ()=>{
     document.getElementById('revealArea').style.display = 'block';
   };
@@ -876,7 +973,7 @@ function renderQuiz(){
       quizAnswered = true;
       const correct = opt === item.jp;
       store.data.quizScore.total++;
-      if(correct){ store.data.quizScore.correct++; delete store.data.quizWrong[qi]; }
+      if(correct){ store.data.quizScore.correct++; delete store.data.quizWrong[qi]; store.data.quizDone[qi] = true; }
       else{ store.data.quizWrong[qi] = true; }
       store.save(); updateStats();
       Array.from(choiceArea.children).forEach(c=>{
@@ -928,7 +1025,7 @@ function renderComprehension(){
       answered = true;
       const correct = opt === item.answer;
       store.data.comprehensionScore.total++;
-      if(correct){ store.data.comprehensionScore.correct++; delete store.data.comprehensionWrong[ci]; }
+      if(correct){ store.data.comprehensionScore.correct++; delete store.data.comprehensionWrong[ci]; store.data.comprehensionDone[ci] = true; }
       else{ store.data.comprehensionWrong[ci] = true; }
       store.save(); updateStats();
       Array.from(choiceArea.children).forEach(c=>{
@@ -1007,7 +1104,7 @@ function renderGrammar(){
       grammarAnswered = true;
       const correct = opt === item.answer;
       store.data.grammarScore.total++;
-      if(correct){ store.data.grammarScore.correct++; delete store.data.grammarWrong[gi]; }
+      if(correct){ store.data.grammarScore.correct++; delete store.data.grammarWrong[gi]; store.data.grammarDone[gi] = true; }
       else{ store.data.grammarWrong[gi] = true; }
       store.save(); updateStats();
       if(!grammarHintShown){
@@ -1746,6 +1843,77 @@ function narniaExampleAudioHtml(vi){
   // 例文の音声は自動再生しない（🔊ボタンでの手動再生のみ）。
   return `<button type="button" class="audiobtn" onclick="playNarniaAudio(event,'${src}')" title="もう一度聞く">🔊</button>`;
 }
+
+// ---- Aslan's Roar: speaking/shadowing practice via the Web Speech API.
+// Purely additive — the mic button simply doesn't render on browsers
+// without SpeechRecognition support (mirrors the try/catch pattern used
+// for audio playback above). ----
+function speechRecognitionSupported(){
+  return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+}
+function normalizeSpeech(s){
+  return String(s).toLowerCase().replace(/<[^>]+>/g,' ').replace(/[^a-z0-9' ]/g,' ').replace(/\s+/g,' ').trim();
+}
+function narniaMicHtml(vi, mode){
+  mode = mode || 'term';
+  if(!speechRecognitionSupported()) return '';
+  return `<button type="button" class="audiobtn micbtn" onclick="startShadowing(event,${vi},'${mode}')" title="発音してみよう（マイクで録音）">🎤</button><span class="shadowResult" id="shadowResult-${mode}-${vi}"></span>`;
+}
+function shadowingTarget(vi, mode){
+  const item = VOCAB[vi];
+  return mode==='example' ? normalizeSpeech(item.enHtml||'') : normalizeSpeech(item.term);
+}
+let shadowRecognizer = null;
+function startShadowing(event, vi, mode){
+  if(event) event.stopPropagation();
+  if(!speechRecognitionSupported()) return;
+  mode = mode || 'term';
+  const target = shadowingTarget(vi, mode);
+  const targetWords = target.split(' ').filter(Boolean);
+  const resultEl = document.getElementById('shadowResult-'+mode+'-'+vi);
+  const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(shadowRecognizer){
+    if(shadowRecognizer._timeoutId) clearTimeout(shadowRecognizer._timeoutId);
+    try{ shadowRecognizer.abort(); }catch(e){}
+  }
+  const rec = new Rec();
+  shadowRecognizer = rec;
+  rec.lang = 'en-US';
+  rec.interimResults = false;
+  rec.maxAlternatives = 1;
+  if(resultEl){ resultEl.className = 'shadowResult listening'; resultEl.textContent = '🎤 アスランが聞いています…'; }
+  let settled = false;
+  const timeoutId = setTimeout(()=>{
+    if(settled) return;
+    settled = true;
+    try{ rec.abort(); }catch(e){}
+    if(resultEl){ resultEl.className = 'shadowResult bad'; resultEl.textContent = '🎤 応答がありませんでした。もう一度🎤を押して試してみよう'; }
+  }, 8000);
+  rec._timeoutId = timeoutId;
+  rec.onresult = (e)=>{
+    if(settled) return;
+    settled = true;
+    clearTimeout(timeoutId);
+    const heard = e.results[0][0].transcript;
+    const heardWords = normalizeSpeech(heard).split(' ').filter(Boolean);
+    const overlap = targetWords.filter(w=>heardWords.includes(w)).length;
+    const ratio = targetWords.length ? overlap/targetWords.length : 0;
+    const matched = mode==='example' ? ratio >= 0.6 : ratio >= 1;
+    if(resultEl){
+      resultEl.className = 'shadowResult ' + (matched ? 'good' : 'bad');
+      resultEl.textContent = matched
+        ? `✅「${heard}」— ナルニアの言葉として認められた！`
+        : `❌「${heard}」— 白い魔女に阻まれた…もう一度挑戦しよう`;
+    }
+  };
+  rec.onerror = ()=>{
+    if(settled) return;
+    settled = true;
+    clearTimeout(timeoutId);
+    if(resultEl){ resultEl.className = 'shadowResult bad'; resultEl.textContent = '🎤 うまく聞き取れませんでした（マイクの許可設定を確認してください）'; }
+  };
+  try{ rec.start(); }catch(e){ clearTimeout(timeoutId); if(resultEl) resultEl.textContent = ''; }
+}
 function s1800ExplainEl(vi, onNext){
   const item = VOCAB[vi];
   const extra = VOCAB_EXTRA[vi] || {};
@@ -1753,7 +1921,7 @@ function s1800ExplainEl(vi, onNext){
   wrap.className = 'explain';
   let html = `💡 覚えるコツ：${extra.tip || '本文の文脈で覚えましょう。'}`;
   if(item.enHtml){
-    html += `<div style="margin-top:10px">📘 ${item.enHtml}${narniaExampleAudioHtml(vi)}<br><span style="color:var(--sub)">${item.jp||''}</span></div>`;
+    html += `<div style="margin-top:10px">📘 ${item.enHtml}${narniaExampleAudioHtml(vi)}${narniaMicHtml(vi,'example')}<br><span style="color:var(--sub)">${item.jp||''}</span></div>`;
   }
   wrap.innerHTML = html;
   const nextBtn = document.createElement('button');
@@ -1937,7 +2105,7 @@ function s1800RenderTraining(area){
     <div class="progress">セット${setIdx+1} トレーニング ・マスター済み ${masteredCount} / ${totalCount}</div>
     <div class="timerbar"><div class="timerbar-fill" id="s1800Timer" style="width:100%"></div></div>
     <div class="card">
-      <div class="term" style="text-align:center; font-size:26px; margin-bottom:18px">${item.term}${narniaWordAudioHtml(vi)}</div>
+      <div class="term" style="text-align:center; font-size:26px; margin-bottom:18px">${item.term}${narniaWordAudioHtml(vi)}${narniaMicHtml(vi,'term')}</div>
       <div id="s1800ChoiceArea"></div>
     </div>
   `;
@@ -2029,7 +2197,7 @@ function s1800RenderConfirm(area, isFinal){
   area.innerHTML = `
     <div class="progress">${isFinal ? '最終確認テスト' : `セット${s1800CurrentSet+1} 確認テスト`} ・ ${s1800TestIdx+1} / ${s1800TestQueue.length}</div>
     <div class="card">
-      <div class="term" style="text-align:center; font-size:26px; margin-bottom:18px">${item.term}${narniaWordAudioHtml(vi)}</div>
+      <div class="term" style="text-align:center; font-size:26px; margin-bottom:18px">${item.term}${narniaWordAudioHtml(vi)}${narniaMicHtml(vi,'term')}</div>
       <div id="s1800TestChoiceArea"></div>
     </div>
   `;
@@ -2182,6 +2350,185 @@ const BANNER_SVG = {
   </svg>`,
 };
 
+// ================= MAP TAB (melting snow progress map) =================
+// Averages mastery across every gradable mode that's tagged with a chapter
+// number, so a chapter's snow only fully melts once vocab, underline,
+// quiz, comprehension and grammar are all cleared for it.
+function chapterMastery(ch){
+  const parts = [];
+  const vocabIdxs = VOCAB.map((_,i)=>i).filter(i=>VOCAB[i].chapter===ch);
+  if(vocabIdxs.length) parts.push(vocabIdxs.filter(i=>(vocabState(i).box||0) >= 4).length / vocabIdxs.length);
+  const underIdxs = UNDERLINE.map((_,i)=>i).filter(i=>UNDERLINE[i].chapter===ch);
+  if(underIdxs.length) parts.push(underIdxs.filter(i=>store.data.underlineDone[i]).length / underIdxs.length);
+  const quizIdxs = QUIZ.map((_,i)=>i).filter(i=>QUIZ[i].chapter===ch);
+  if(quizIdxs.length) parts.push(quizIdxs.filter(i=>store.data.quizDone[i]).length / quizIdxs.length);
+  const compIdxs = COMPREHENSION.map((_,i)=>i).filter(i=>COMPREHENSION[i].chapter===ch);
+  if(compIdxs.length) parts.push(compIdxs.filter(i=>store.data.comprehensionDone[i]).length / compIdxs.length);
+  const gramIdxs = GRAMMAR.map((_,i)=>i).filter(i=>GRAMMAR[i].chapter===ch);
+  if(gramIdxs.length) parts.push(gramIdxs.filter(i=>store.data.grammarDone[i]).length / gramIdxs.length);
+  if(parts.length===0) return 0;
+  return parts.reduce((a,b)=>a+b,0) / parts.length;
+}
+
+function overallMastery(){
+  const pcts = SUMMARY.chapters.map(c=>chapterMastery(c.chapter));
+  return pcts.length ? pcts.reduce((a,b)=>a+b,0)/pcts.length : 0;
+}
+
+// ---- Chronicle Seal: a downloadable PNG summary of study progress ----
+function chronicleStats(){
+  const learned = Object.values(store.data.vocab).filter(s=>s.box>0).length;
+  const underDone = Object.keys(store.data.underlineDone).length;
+  const qs = store.data.quizScore, gs = store.data.grammarScore, ks = store.data.kotestScore;
+  const s1800Cleared = Object.keys((store.data.s1800||{}).confirmed||{}).length;
+  return {
+    learned, vocabTotal: VOCAB.length,
+    underDone, underTotal: UNDERLINE.length,
+    quizPct: qs.total ? Math.round(qs.correct/qs.total*100) : 0,
+    gramPct: gs.total ? Math.round(gs.correct/gs.total*100) : 0,
+    kotestPct: ks.total ? Math.round(ks.correct/ks.total*100) : 0,
+    s1800Cleared, s1800Total: S1800_SETS.length,
+    overall: overallMastery(),
+  };
+}
+
+function renderChronicleSealCard(){
+  return `
+    <div class="card" style="text-align:center; margin-top:20px">
+      <div class="miniHead" style="margin-top:0">🖋 年代記の封蝋</div>
+      <div class="progress">ここまでの学習の証を1枚の画像として書き出せます。先生や保護者への提出・自分の記録用にどうぞ。</div>
+      <div class="btnrow" style="justify-content:center; margin-top:10px">
+        <button class="primary" id="chronicleSealBtn">封蝋を受け取る（画像を保存）</button>
+      </div>
+      <canvas id="chronicleCanvas" style="display:none"></canvas>
+    </div>
+  `;
+}
+
+function wireChronicleSeal(){
+  const btn = document.getElementById('chronicleSealBtn');
+  if(btn) btn.onclick = drawChronicleSeal;
+}
+
+function drawChronicleSeal(){
+  const stats = chronicleStats();
+  const canvas = document.getElementById('chronicleCanvas');
+  const FONT = `"Hiragino Sans","Yu Gothic",Meiryo,sans-serif`;
+  const W = 900, H = 1180;
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  const grad = ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0, '#f6ecd8');
+  grad.addColorStop(1, '#ecdcb8');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle = '#8a5a3b'; ctx.lineWidth = 8; ctx.strokeRect(20,20,W-40,H-40);
+  ctx.strokeStyle = '#c9a86a'; ctx.lineWidth = 2; ctx.strokeRect(34,34,W-68,H-68);
+
+  ctx.fillStyle = '#5f3d27';
+  ctx.textAlign = 'center';
+  ctx.font = `700 38px ${FONT}`;
+  ctx.fillText('ナルニア国物語 年代記の封蝋', W/2, 100);
+  ctx.font = `400 20px ${FONT}`;
+  ctx.fillStyle = '#8a5a3b';
+  ctx.fillText(new Date().toLocaleDateString('ja-JP'), W/2, 135);
+
+  ctx.beginPath();
+  ctx.arc(W/2, 230, 80, 0, Math.PI*2);
+  ctx.fillStyle = '#a32d2d';
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.font = `700 42px ${FONT}`;
+  ctx.fillText(Math.round(stats.overall*100)+'%', W/2, 240);
+  ctx.font = `600 16px ${FONT}`;
+  ctx.fillText('全体の習得度', W/2, 265);
+
+  const rows = [
+    ['習得した語彙', `${stats.learned} / ${stats.vocabTotal}`],
+    ['下線部訳 練習済み', `${stats.underDone} / ${stats.underTotal}`],
+    ['読解クイズ正答率', `${stats.quizPct}%`],
+    ['文法問題正答率', `${stats.gramPct}%`],
+    ['小テスト正答率', `${stats.kotestPct}%`],
+    ['速習1800クリア', `${stats.s1800Cleared} / ${stats.s1800Total} セット`],
+  ];
+  let y = 360;
+  rows.forEach(([label, val])=>{
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#6b6b64';
+    ctx.font = `400 24px ${FONT}`;
+    ctx.fillText(label, 90, y);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#2b2b28';
+    ctx.font = `700 26px ${FONT}`;
+    ctx.fillText(val, W-90, y);
+    y += 56;
+  });
+
+  y += 20;
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#5f3d27';
+  ctx.font = `700 24px ${FONT}`;
+  ctx.fillText('章ごとの雪解け度', 90, y);
+  y += 30;
+  SUMMARY.chapters.forEach(c=>{
+    const pct = chapterMastery(c.chapter);
+    ctx.fillStyle = '#2b2b28';
+    ctx.font = `400 18px ${FONT}`;
+    ctx.fillText(`第${c.chapter}章 ${c.title_jp}`, 90, y);
+    const barX = 420, barW = W-90-barX;
+    ctx.fillStyle = '#e4e0d6';
+    ctx.fillRect(barX, y-16, barW, 14);
+    ctx.fillStyle = '#3b6d11';
+    ctx.fillRect(barX, y-16, barW*pct, 14);
+    y += 34;
+  });
+
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#8a5a3b';
+  ctx.font = `italic 18px ${FONT}`;
+  ctx.fillText('— Once a king or queen of Narnia, always a king or queen. —', W/2, H-60);
+
+  const link = document.createElement('a');
+  link.download = `narnia-chronicle-seal-${new Date().toISOString().slice(0,10)}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+function renderMap(){
+  const area = document.getElementById('mapArea');
+  const overall = overallMastery();
+  let html = `
+    <div class="card" style="text-align:center; margin-bottom:20px">
+      <div class="miniHead" style="margin-top:0">ナルニアの雪はどれだけ溶けた？</div>
+      <div class="mapOverallBar"><div class="mapOverallFill" style="width:${Math.round(overall*100)}%"></div></div>
+      <div class="progress" style="margin-top:8px">全体の雪解け度：${Math.round(overall*100)}%${overall>=0.999 ? '　🦁 アスランが森に帰ってきた！' : ''}</div>
+    </div>
+    <div class="mapGrid">
+  `;
+  SUMMARY.chapters.forEach(c=>{
+    const pct = chapterMastery(c.chapter);
+    const snowOpacity = Math.max(0, 1 - pct);
+    const cleared = pct >= 0.999;
+    html += `
+      <div class="mapTile ${cleared ? 'cleared' : ''}">
+        <div class="mapTileArt">
+          ${BANNER_SVG[c.svg] || ''}
+          <div class="mapSnowOverlay" style="opacity:${snowOpacity.toFixed(2)}"></div>
+          ${cleared ? '<div class="mapAslan" title="アスランが見守っている">🦁</div>' : ''}
+        </div>
+        <div class="mapTileTitle">第${c.chapter}章　${c.title_jp}</div>
+        <div class="mapTileBar"><div class="mapTileFill" style="width:${Math.round(pct*100)}%"></div></div>
+        <div class="progress">${Math.round(pct*100)}% 雪解け</div>
+      </div>
+    `;
+  });
+  html += `</div>`;
+  html += renderChronicleSealCard();
+  area.innerHTML = html;
+  wireChronicleSeal();
+}
+
 function renderSummary(){
   const area = document.getElementById('summaryArea');
   let html = '';
@@ -2224,7 +2571,49 @@ function renderSummary(){
   area.innerHTML = html;
 }
 
-// ================= REVIEW TAB =================
+// ================= REVIEW TAB (White Witch's Frozen Vault) =================
+// Each due item is "frozen in ice". One correct answer cracks the ice;
+// a second consecutive correct answer shatters it and frees the item from
+// the review queue (Leitner-style: any wrong answer re-freezes the ice).
+const ICE_STREAK_TO_SHATTER = 2;
+
+function iceKey(cat, idx){ return cat+':'+idx; }
+function iceStreak(cat, idx){ return store.data.reviewStreak[iceKey(cat,idx)] || 0; }
+
+function iceStatusHtml(cat, idx){
+  const s = iceStreak(cat, idx);
+  if(s<=0) return `<div class="iceStatus frozen">❄️ 白い魔女の氷に閉じ込められている（正解を${ICE_STREAK_TO_SHATTER}回連続で氷を砕こう）</div>`;
+  return `<div class="iceStatus cracked">🧊 氷にヒビが入った！ あと${ICE_STREAK_TO_SHATTER-s}回正解で解放</div>`;
+}
+
+// Applies one answer to the streak/ice state. Returns {shattered:boolean}.
+function iceAnswer(cat, idx, correct, wrongMap, doneMap){
+  const key = iceKey(cat, idx);
+  if(!correct){
+    delete store.data.reviewStreak[key];
+    wrongMap[idx] = true;
+    store.save(); updateStats();
+    return {shattered:false};
+  }
+  const streak = iceStreak(cat, idx) + 1;
+  if(streak >= ICE_STREAK_TO_SHATTER){
+    delete store.data.reviewStreak[key];
+    delete wrongMap[idx];
+    if(doneMap) doneMap[idx] = true;
+    store.save(); updateStats();
+    return {shattered:true};
+  }
+  store.data.reviewStreak[key] = streak;
+  store.save(); updateStats();
+  return {shattered:false};
+}
+
+function iceShatterFx(cardEl){
+  if(!cardEl) return;
+  cardEl.classList.add('iceShatter');
+  fireConfetti(cardEl);
+}
+
 function renderReview(){
   const area = document.getElementById('reviewArea');
   const qWrong = Object.keys(store.data.quizWrong).map(Number).filter(i=>QUIZ[i]);
@@ -2234,11 +2623,16 @@ function renderReview(){
   const kWrong = Object.keys(store.data.kotestWrong).map(Number).filter(i=>KOTEST[i]);
 
   if(qWrong.length===0 && uWrong.length===0 && gWrong.length===0 && cWrong.length===0 && kWrong.length===0){
-    area.innerHTML = `<div class="card empty">苦手問題はありません。素晴らしい！<br>クイズ・下線部訳・文法問題・内容理解・小テスト対策で間違えると、ここに自動で表示されます。</div>`;
+    area.innerHTML = `<div class="card empty" id="reviewAllClearCard">🦁 白い魔女の氷の牢獄は空っぽです。素晴らしい！<br>クイズ・下線部訳・文法問題・内容理解・小テスト対策で間違えると、ここに氷漬けの問題として自動で表示されます。</div>`;
+    fireConfetti(document.getElementById('reviewAllClearCard'));
     return;
   }
 
   area.innerHTML = `
+    <div class="card" style="margin-bottom:20px; background:var(--ice-bg); border-color:var(--ice)">
+      <b>❄️ 白い魔女の氷の牢獄</b> — 氷に閉じ込められた問題が ${kWrong.length+qWrong.length+cWrong.length+uWrong.length+gWrong.length} 問あります。
+      同じ問題に${ICE_STREAK_TO_SHATTER}回連続で正解すると氷が砕けて解放されます。アスランの咆哮（🎉）が聞こえたら、そのカテゴリはクリアです。
+    </div>
     <div class="reviewSection">
       <div class="subhead">小テスト対策の苦手問題（${kWrong.length}件）</div>
       <div id="reviewKotestArea"></div>
@@ -2273,7 +2667,7 @@ function renderReviewKotest(list){
   const ki = list[0];
   const item = KOTEST[ki];
   let answered = false;
-  area.innerHTML = `<div class="card"><div class="en" style="font-size:17px">${item.en}</div><div id="rkChoiceArea"></div></div>`;
+  area.innerHTML = `<div class="card iceCard" id="rkCard">${iceStatusHtml('kotest',ki)}<div class="en" style="font-size:17px">${item.en}</div><div id="rkChoiceArea"></div></div>`;
   const choiceArea = document.getElementById('rkChoiceArea');
   kotestChoices(item).forEach(opt=>{
     const b = document.createElement('button');
@@ -2283,8 +2677,8 @@ function renderReviewKotest(list){
       if(answered) return;
       answered = true;
       const correct = opt === item.answer;
-      if(correct){ delete store.data.kotestWrong[ki]; }
-      store.save(); updateStats();
+      const res = iceAnswer('kotest', ki, correct, store.data.kotestWrong, null);
+      if(res.shattered) iceShatterFx(document.getElementById('rkCard'));
       Array.from(choiceArea.children).forEach(c=>{
         c.disabled = true;
         if(c.textContent === item.answer) c.classList.add('correct');
@@ -2308,7 +2702,7 @@ function renderReviewQuiz(list){
   const item = QUIZ[qi];
   const options = buildChoices(qi);
   let answered = false;
-  area.innerHTML = `<div class="card"><div class="en">${item.en}</div><div id="rqChoiceArea"></div></div>`;
+  area.innerHTML = `<div class="card iceCard" id="rqCard">${iceStatusHtml('quiz',qi)}<div class="en">${item.en}</div><div id="rqChoiceArea"></div></div>`;
   const choiceArea = document.getElementById('rqChoiceArea');
   options.forEach(opt=>{
     const b = document.createElement('button');
@@ -2318,8 +2712,8 @@ function renderReviewQuiz(list){
       if(answered) return;
       answered = true;
       const correct = opt === item.jp;
-      if(correct){ delete store.data.quizWrong[qi]; }
-      store.save(); updateStats();
+      const res = iceAnswer('quiz', qi, correct, store.data.quizWrong, store.data.quizDone);
+      if(res.shattered) iceShatterFx(document.getElementById('rqCard'));
       Array.from(choiceArea.children).forEach(c=>{
         c.disabled = true;
         if(c.textContent === item.jp) c.classList.add('correct');
@@ -2342,7 +2736,7 @@ function renderReviewComp(list){
   const ci = list[0];
   const item = COMPREHENSION[ci];
   let answered = false;
-  area.innerHTML = `<div class="card"><div class="en" style="font-weight:600">${item.q}</div><div id="rcChoiceArea"></div></div>`;
+  area.innerHTML = `<div class="card iceCard" id="rcCard">${iceStatusHtml('comp',ci)}<div class="en" style="font-weight:600">${item.q}</div><div id="rcChoiceArea"></div></div>`;
   const choiceArea = document.getElementById('rcChoiceArea');
   const options = shuffle(item.choices);
   options.forEach(opt=>{
@@ -2353,8 +2747,8 @@ function renderReviewComp(list){
       if(answered) return;
       answered = true;
       const correct = opt === item.answer;
-      if(correct){ delete store.data.comprehensionWrong[ci]; }
-      store.save(); updateStats();
+      const res = iceAnswer('comp', ci, correct, store.data.comprehensionWrong, store.data.comprehensionDone);
+      if(res.shattered) iceShatterFx(document.getElementById('rcCard'));
       Array.from(choiceArea.children).forEach(c=>{
         c.disabled = true;
         if(c.textContent === item.answer) c.classList.add('correct');
@@ -2381,7 +2775,8 @@ function renderReviewUnderline(list){
   const gi = list[0];
   const item = UNDERLINE[gi];
   area.innerHTML = `
-    <div class="card">
+    <div class="card iceCard" id="ruCard">
+      ${iceStatusHtml('underline',gi)}
       <div class="en">${item.enHtml}</div>
       <div class="btnrow"><button class="primary" id="rUShowAns">答えを見る</button></div>
       <div class="reveal" id="rURevealArea" style="display:none">
@@ -2395,11 +2790,16 @@ function renderReviewUnderline(list){
   `;
   document.getElementById('rUShowAns').onclick = ()=>{ document.getElementById('rURevealArea').style.display='block'; };
   document.getElementById('rUGood').onclick = ()=>{
-    delete store.data.underlineWrong[gi];
+    const res = iceAnswer('underline', gi, true, store.data.underlineWrong, null);
     store.data.underlineDone[gi] = true;
-    store.save(); updateStats(); renderReview();
+    store.save(); updateStats();
+    if(res.shattered) iceShatterFx(document.getElementById('ruCard'));
+    setTimeout(renderReview, res.shattered ? 500 : 0);
   };
-  document.getElementById('rUBad').onclick = ()=>{ renderReview(); };
+  document.getElementById('rUBad').onclick = ()=>{
+    iceAnswer('underline', gi, false, store.data.underlineWrong, null);
+    renderReview();
+  };
 }
 
 function renderReviewGrammar(list){
@@ -2409,7 +2809,8 @@ function renderReviewGrammar(list){
   const item = GRAMMAR[gi];
   let answered = false;
   area.innerHTML = `
-    <div class="card">
+    <div class="card iceCard" id="rgCard">
+      ${iceStatusHtml('grammar',gi)}
       <div id="rgHintArea"><button id="rgShowHint">💡 ヒント（文法ポイント）を見る</button></div>
       <div class="en" style="margin-top:14px">${item.en}</div>
       <div id="rgChoiceArea"></div>
@@ -2429,8 +2830,8 @@ function renderReviewGrammar(list){
       if(answered) return;
       answered = true;
       const correct = opt === item.answer;
-      if(correct){ delete store.data.grammarWrong[gi]; }
-      store.save(); updateStats();
+      const res = iceAnswer('grammar', gi, correct, store.data.grammarWrong, store.data.grammarDone);
+      if(res.shattered) iceShatterFx(document.getElementById('rgCard'));
       document.getElementById('rgHintArea').innerHTML = `<div class="point-badge">${item.point}</div>`;
       Array.from(choiceArea.children).forEach(c=>{
         c.disabled = true;
@@ -2461,12 +2862,14 @@ document.querySelectorAll('.tab').forEach(tab=>{
     if(tab.dataset.tab === 'review') renderReview();
     if(tab.dataset.tab === 'summary') renderSummary();
     if(tab.dataset.tab === 'speed1800') renderS1800();
+    if(tab.dataset.tab === 'map') renderMap();
   };
 });
 
 (async function init(){
   applyUiMode();
   await store.load();
+  ensureData();
   updateStats();
   buildVocabOrder(); renderVocabRoot();
   buildUnderlineOrder(); renderUnderline();
@@ -2474,6 +2877,14 @@ document.querySelectorAll('.tab').forEach(tab=>{
   buildGrammarOrder(); renderGrammar();
   buildKotestOrder(); renderKotest();
 })();
+
+// Functions invoked from inline onclick="..." attributes in generated HTML
+// run in global scope, so they must be attached to window explicitly to be
+// reachable from inside this closure (cycleUiMode/playNarniaAudio predate
+// this fix and were silently broken by the same issue until now).
+window.cycleUiMode = cycleUiMode;
+window.playNarniaAudio = playNarniaAudio;
+window.startShadowing = startShadowing;
 
 })();
 </script>
