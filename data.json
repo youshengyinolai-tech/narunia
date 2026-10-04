@@ -4277,6 +4277,102 @@
    "enHtml": "The old man had thick <mark>whiskers</mark> on his cheeks.",
    "jp": "その老人は頬に濃い頬ひげを生やしていた。",
    "exam": true
+  },
+  {
+   "term": "superior",
+   "enHtml": "And Edmund gave a very <mark>superior</mark> look as if he were far older than Lucy (there was really only a year's difference) and then a little <mark>snigger</mark> and said, ",
+   "jp": "エドマンドは、まるでルーシーよりずっと年上であるかのように（実際には1歳しか違わなかったが）とてもえらそうな顔をしてみせ、それから小さく意地悪な笑みを浮かべてこう言った。",
+   "chapter": 5,
+   "semester": "kouki",
+   "gloss": "えらそうな、見下すような"
+  },
+  {
+   "term": "snigger",
+   "enHtml": "And Edmund gave a very <mark>superior</mark> look as if he were far older than Lucy (there was really only a year's difference) and then a little <mark>snigger</mark> and said, ",
+   "jp": "エドマンドは、まるでルーシーよりずっと年上であるかのように（実際には1歳しか違わなかったが）とてもえらそうな顔をしてみせ、それから小さく意地悪な笑みを浮かべてこう言った。",
+   "chapter": 5,
+   "semester": "kouki",
+   "gloss": "くすくす笑う（意地悪な含み笑い）"
+  },
+  {
+   "term": "rushed out of the room",
+   "enHtml": "Poor Lucy gave Edmund one look and <mark>rushed out of the room</mark>. ",
+   "jp": "かわいそうなルーシーはエドマンドをひと目見ると、部屋から飛び出していった。",
+   "chapter": 5,
+   "semester": "kouki",
+   "gloss": "部屋から飛び出した"
+  },
+  {
+   "term": "nastier",
+   "enHtml": "Edmund, who was becoming a <mark>nastier</mark> person every minute, thought that he had <mark>scored a great success</mark>, and went on at once to say, \"There she goes again. What's the matter with her? That's the worst of young kids, they always-\" ",
+   "jp": "一刻ごとにますます意地悪になっていくエドマンドは、自分が大成功を収めたと思い、すぐに続けてこう言った。「また始まった。あの子、一体どうしたんだろう。これが年下の子の嫌なところだよね、いつも――」",
+   "chapter": 5,
+   "semester": "kouki",
+   "gloss": "（nastyの比較級）より意地悪な"
+  },
+  {
+   "term": "scored a great success",
+   "enHtml": "Edmund, who was becoming a <mark>nastier</mark> person every minute, thought that he had <mark>scored a great success</mark>, and went on at once to say, \"There she goes again. What's the matter with her? That's the worst of young kids, they always-\" ",
+   "jp": "一刻ごとにますます意地悪になっていくエドマンドは、自分が大成功を収めたと思い、すぐに続けてこう言った。「また始まった。あの子、一体どうしたんだろう。これが年下の子の嫌なところだよね、いつも――」",
+   "chapter": 5,
+   "semester": "kouki",
+   "gloss": "大成功を収めた"
+  },
+  {
+   "term": "savagely",
+   "enHtml": "\"Look here,\" said Peter, turning on him <mark>savagely</mark>, \"shut up! You've been perfectly <mark>beastly</mark> to Lu ever since she started this <mark>nonsense</mark> about the wardrobe, and now you go playing games with her about it and <mark>setting her off</mark> again. I believe you did it simply <mark>out of spite</mark>.\" ",
+   "jp": "「いいか」とピーターは彼の方を荒々しく振り向いて言った。「黙れ！ お前はルーシーがワードローブのばかげた話を始めてからずっと、彼女にひどい態度を取ってきた。それなのに今度はその話をネタにからかって、また彼女を取り乱させたんだ。お前はただの悪意でそうしたんだと思う。」",
+   "chapter": 5,
+   "semester": "kouki",
+   "gloss": "荒々しく、乱暴に"
+  },
+  {
+   "term": "beastly",
+   "enHtml": "\"Look here,\" said Peter, turning on him <mark>savagely</mark>, \"shut up! You've been perfectly <mark>beastly</mark> to Lu ever since she started this <mark>nonsense</mark> about the wardrobe, and now you go playing games with her about it and <mark>setting her off</mark> again. I believe you did it simply <mark>out of spite</mark>.\" ",
+   "jp": "「いいか」とピーターは彼の方を荒々しく振り向いて言った。「黙れ！ お前はルーシーがワードローブのばかげた話を始めてからずっと、彼女にひどい態度を取ってきた。それなのに今度はその話をネタにからかって、また彼女を取り乱させたんだ。お前はただの悪意でそうしたんだと思う。」",
+   "chapter": 5,
+   "semester": "kouki",
+   "gloss": "ひどい、いやな（口語）"
+  },
+  {
+   "term": "nonsense",
+   "enHtml": "\"Look here,\" said Peter, turning on him <mark>savagely</mark>, \"shut up! You've been perfectly <mark>beastly</mark> to Lu ever since she started this <mark>nonsense</mark> about the wardrobe, and now you go playing games with her about it and <mark>setting her off</mark> again. I believe you did it simply <mark>out of spite</mark>.\" ",
+   "jp": "「いいか」とピーターは彼の方を荒々しく振り向いて言った。「黙れ！ お前はルーシーがワードローブのばかげた話を始めてからずっと、彼女にひどい態度を取ってきた。それなのに今度はその話をネタにからかって、また彼女を取り乱させたんだ。お前はただの悪意でそうしたんだと思う。」",
+   "chapter": 5,
+   "semester": "kouki",
+   "gloss": "ばかげた話、たわごと"
+  },
+  {
+   "term": "setting her off",
+   "enHtml": "\"Look here,\" said Peter, turning on him <mark>savagely</mark>, \"shut up! You've been perfectly <mark>beastly</mark> to Lu ever since she started this <mark>nonsense</mark> about the wardrobe, and now you go playing games with her about it and <mark>setting her off</mark> again. I believe you did it simply <mark>out of spite</mark>.\" ",
+   "jp": "「いいか」とピーターは彼の方を荒々しく振り向いて言った。「黙れ！ お前はルーシーがワードローブのばかげた話を始めてからずっと、彼女にひどい態度を取ってきた。それなのに今度はその話をネタにからかって、また彼女を取り乱させたんだ。お前はただの悪意でそうしたんだと思う。」",
+   "chapter": 5,
+   "semester": "kouki",
+   "gloss": "彼女をまた怒らせる・取り乱させる（set off）"
+  },
+  {
+   "term": "out of spite",
+   "enHtml": "\"Look here,\" said Peter, turning on him <mark>savagely</mark>, \"shut up! You've been perfectly <mark>beastly</mark> to Lu ever since she started this <mark>nonsense</mark> about the wardrobe, and now you go playing games with her about it and <mark>setting her off</mark> again. I believe you did it simply <mark>out of spite</mark>.\" ",
+   "jp": "「いいか」とピーターは彼の方を荒々しく振り向いて言った。「黙れ！ お前はルーシーがワードローブのばかげた話を始めてからずっと、彼女にひどい態度を取ってきた。それなのに今度はその話をネタにからかって、また彼女を取り乱させたんだ。お前はただの悪意でそうしたんだと思う。」",
+   "chapter": 5,
+   "semester": "kouki",
+   "gloss": "悪意で、意地で"
+  },
+  {
+   "term": "taken aback",
+   "enHtml": "\"But it's all nonsense,\" said Edmund, very <mark>taken aback</mark>. ",
+   "jp": "「だけど、全部ばかげた話じゃないか」とエドマンドはひどくたじろいで言った。",
+   "chapter": 5,
+   "semester": "kouki",
+   "gloss": "驚いて、たじろいで"
+  },
+  {
+   "term": "that's just the point",
+   "enHtml": "\"Of course it's all nonsense,\" said Peter, \"<mark>that's just the point</mark>. Lu was perfectly all right when we left home, but since we've been down here she seems to...\" ",
+   "jp": "「もちろん全部ばかげた話さ」とピーターは言った。「それがまさに問題なんだ。ルーシーは家を出たときは完全に普通だったのに、ここに来てからというもの、どうも……」",
+   "chapter": 5,
+   "semester": "kouki",
+   "gloss": "それがまさに重要な点だ"
   }
  ],
  "underline": [
@@ -4717,6 +4813,34 @@
    "enHtml": "By this time they had walked a <mark><u>good</u></mark> way. ",
    "jp": "その頃には、彼らはかなりの距離を歩いてきていた。",
    "chapter": 4
+  },
+  {
+   "underline": "scored a great success",
+   "enHtml": "Edmund, who was becoming a <mark>nastier</mark> person every minute, thought that he had <mark><u>scored a great success</u></mark>, and went on at once to say, \"There she goes again. What's the matter with her? That's the worst of young kids, they always-\" ",
+   "jp": "一刻ごとにますます意地悪になっていくエドマンドは、自分が大成功を収めたと思い、すぐに続けてこう言った。「また始まった。あの子、一体どうしたんだろう。これが年下の子の嫌なところだよね、いつも――」",
+   "chapter": 5,
+   "semester": "kouki"
+  },
+  {
+   "underline": "turning on him savagely",
+   "enHtml": "\"Look here,\" said Peter, <u>turning on him <mark>savagely</mark></u>, \"shut up! You've been perfectly <mark>beastly</mark> to Lu ever since she started this <mark>nonsense</mark> about the wardrobe, and now you go playing games with her about it and <mark>setting her off</mark> again. I believe you did it simply <mark>out of spite</mark>.\" ",
+   "jp": "「いいか」とピーターは彼の方を荒々しく振り向いて言った。「黙れ！ お前はルーシーがワードローブのばかげた話を始めてからずっと、彼女にひどい態度を取ってきた。それなのに今度はその話をネタにからかって、また彼女を取り乱させたんだ。お前はただの悪意でそうしたんだと思う。」",
+   "chapter": 5,
+   "semester": "kouki"
+  },
+  {
+   "underline": "out of spite",
+   "enHtml": "\"Look here,\" said Peter, turning on him <mark>savagely</mark>, \"shut up! You've been perfectly <mark>beastly</mark> to Lu ever since she started this <mark>nonsense</mark> about the wardrobe, and now you go playing games with her about it and <mark>setting her off</mark> again. I believe you did it simply <mark><u>out of spite</u></mark>.\" ",
+   "jp": "「いいか」とピーターは彼の方を荒々しく振り向いて言った。「黙れ！ お前はルーシーがワードローブのばかげた話を始めてからずっと、彼女にひどい態度を取ってきた。それなのに今度はその話をネタにからかって、また彼女を取り乱させたんだ。お前はただの悪意でそうしたんだと思う。」",
+   "chapter": 5,
+   "semester": "kouki"
+  },
+  {
+   "underline": "very taken aback",
+   "enHtml": "\"But it's all nonsense,\" said Edmund, <u>very <mark>taken aback</mark></u>. ",
+   "jp": "「だけど、全部ばかげた話じゃないか」とエドマンドはひどくたじろいで言った。",
+   "chapter": 5,
+   "semester": "kouki"
   }
  ],
  "quiz": [
@@ -7579,6 +7703,54 @@
    "en": "He decided to let Lucy down.",
    "jp": "彼はルーシーを裏切ることにしたのだ。",
    "chapter": 5
+  },
+  {
+   "en": "\"Tell us, Ed,\" said Susan.",
+   "jp": "「エドにいさん、話してよ」とスーザンが言った。",
+   "chapter": 5,
+   "semester": "kouki"
+  },
+  {
+   "en": "And Edmund gave a very superior look as if he were far older than Lucy (there was really only a year's difference) and then a little snigger and said,",
+   "jp": "エドマンドは、まるでルーシーよりずっと年上であるかのように（実際には1歳しか違わなかったが）とてもえらそうな顔をしてみせ、それから小さく意地悪な笑みを浮かべてこう言った。",
+   "chapter": 5,
+   "semester": "kouki"
+  },
+  {
+   "en": "\"Oh, yes, Lucy and I have been playing - pretending that all her story about a country in the wardrobe is true. Just for fun, of course. There's nothing there really.\"",
+   "jp": "「ああ、うん。ルーシーと僕とで遊んでいたんだ――ワードローブの中の国についての話が全部本当だっていうふりをして。もちろん、ただの遊びだよ。本当はあそこには何もないんだ。」",
+   "chapter": 5,
+   "semester": "kouki"
+  },
+  {
+   "en": "Poor Lucy gave Edmund one look and rushed out of the room.",
+   "jp": "かわいそうなルーシーはエドマンドをひと目見ると、部屋から飛び出していった。",
+   "chapter": 5,
+   "semester": "kouki"
+  },
+  {
+   "en": "Edmund, who was becoming a nastier person every minute, thought that he had scored a great success, and went on at once to say, \"There she goes again. What's the matter with her? That's the worst of young kids, they always-\"",
+   "jp": "一刻ごとにますます意地悪になっていくエドマンドは、自分が大成功を収めたと思い、すぐに続けてこう言った。「また始まった。あの子、一体どうしたんだろう。これが年下の子の嫌なところだよね、いつも――」",
+   "chapter": 5,
+   "semester": "kouki"
+  },
+  {
+   "en": "\"Look here,\" said Peter, turning on him savagely, \"shut up! You've been perfectly beastly to Lu ever since she started this nonsense about the wardrobe, and now you go playing games with her about it and setting her off again. I believe you did it simply out of spite.\"",
+   "jp": "「いいか」とピーターは彼の方を荒々しく振り向いて言った。「黙れ！ お前はルーシーがワードローブのばかげた話を始めてからずっと、彼女にひどい態度を取ってきた。それなのに今度はその話をネタにからかって、また彼女を取り乱させたんだ。お前はただの悪意でそうしたんだと思う。」",
+   "chapter": 5,
+   "semester": "kouki"
+  },
+  {
+   "en": "\"But it's all nonsense,\" said Edmund, very taken aback.",
+   "jp": "「だけど、全部ばかげた話じゃないか」とエドマンドはひどくたじろいで言った。",
+   "chapter": 5,
+   "semester": "kouki"
+  },
+  {
+   "en": "\"Of course it's all nonsense,\" said Peter, \"that's just the point. Lu was perfectly all right when we left home, but since we've been down here she seems to...\"",
+   "jp": "「もちろん全部ばかげた話さ」とピーターは言った。「それがまさに問題なんだ。ルーシーは家を出たときは完全に普通だったのに、ここに来てからというもの、どうも……」",
+   "chapter": 5,
+   "semester": "kouki"
   }
  ],
  "yellow_sentences": [

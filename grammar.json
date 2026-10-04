@@ -388,5 +388,75 @@
   "answer": "If only I had worked harder.",
   "explain": "過去の後悔を表す場合、wish/If onlyのどちらも後ろは過去完了形（had+過去分詞）を使う。",
   "chapter": 2
+ },
+ {
+  "point": "比較級＋every minute（ますます〜になる）",
+  "en": "Edmund, who was becoming a ___ person every minute, thought that he had scored a great success.",
+  "choices": [
+   "nastier",
+   "nastiest",
+   "more nastier",
+   "nasty"
+  ],
+  "answer": "nastier",
+  "explain": "比較級＋every minute で「分刻みにますます〜になる」。nasty→nastier（-er型比較級）。more nastierのような二重比較級は誤り。",
+  "chapter": 5,
+  "semester": "kouki"
+ },
+ {
+  "point": "関係代名詞 who（非限定用法・主格）",
+  "en": "Edmund, ___ was becoming a nastier person every minute, thought that he had scored a great success.",
+  "choices": [
+   "who",
+   "which",
+   "whom",
+   "what"
+  ],
+  "answer": "who",
+  "explain": "コンマで挟まれた非限定用法の関係代名詞。先行詞Edmund（人）を説明し、関係詞は後ろの動詞wasの主語になるので主格のwhoが適切。whomは目的格、whichは人以外に使う。",
+  "chapter": 5,
+  "semester": "kouki"
+ },
+ {
+  "point": "as if ＋仮定法過去（まるで〜のように）",
+  "en": "Edmund gave a very superior look ___ he were far older than Lucy.",
+  "choices": [
+   "as if",
+   "because",
+   "although",
+   "so that"
+  ],
+  "answer": "as if",
+  "explain": "as if＋仮定法過去（were）で「まるで〜であるかのように」という、事実とは異なる様子のたとえを表す。",
+  "chapter": 5,
+  "semester": "kouki"
+ },
+ {
+  "point": "現在完了進行形（have been -ing）",
+  "en": "\"Oh, yes, Lucy and I ___ playing - pretending that all her story about a country in the wardrobe is true.\"",
+  "choices": [
+   "have been",
+   "are",
+   "were",
+   "had"
+  ],
+  "answer": "have been",
+  "explain": "have been -ing（現在完了進行形）で「（さっきまで）〜していた」。直前までふざけていたことを表す。",
+  "chapter": 5,
+  "semester": "kouki"
+ },
+ {
+  "point": "ever since ～（それ以来ずっと）＋現在完了",
+  "en": "You've been perfectly beastly to Lu ___ she started this nonsense about the wardrobe.",
+  "choices": [
+   "ever since",
+   "until",
+   "by the time",
+   "as soon as"
+  ],
+  "answer": "ever since",
+  "explain": "ever since＋過去の出来事で「それ以来ずっと」。現在完了(have been)と結びついて、その状態が今も続いていることを示す。",
+  "chapter": 5,
+  "semester": "kouki"
  }
 ]
