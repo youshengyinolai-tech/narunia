@@ -9,7 +9,7 @@
 <script>try{var t=localStorage.getItem("narnia-theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Shippori+Mincho:wght@500;600;800&family=EB+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#faf8f4;
@@ -446,18 +446,18 @@
   @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} .ringArc{stroke-dashoffset:var(--to);} }
   /* theme colors (user-selectable) */
   @media not (prefers-color-scheme: dark){
-    :root[data-theme="pink"]{--accent:#d9577f; --accent-dark:#ad3a60; --accent-bg:#fde4ec; --bg:#fdf6f8; --line:#f2dfe6;}
-    :root[data-theme="blue"]{--accent:#3b7dd8; --accent-dark:#285ea9; --accent-bg:#e3eefc; --bg:#f4f7fc; --line:#dde6f1;}
-    :root[data-theme="mint"]{--accent:#2f9e7a; --accent-dark:#1f7658; --accent-bg:#dcf3ea; --bg:#f3faf7; --line:#d8eae2;}
-    :root[data-theme="purple"]{--accent:#8a5cd1; --accent-dark:#6a40ab; --accent-bg:#efe6fb; --bg:#f8f5fd; --line:#e5ddf2;}
-    :root[data-theme="orange"]{--accent:#e2742a; --accent-dark:#b3561a; --accent-bg:#fdebdc; --bg:#fdf7f1; --line:#f0e2d4;}
+    :root[data-theme="pink"]{--accent:#b5567e; --accent-dark:#8a3a5c; --accent-bg:#f6e8ee; --bg:#fdf8fa; --line:#efe1e7;}
+    :root[data-theme="blue"]{--accent:#3f7ea6; --accent-dark:#2a5e80; --accent-bg:#e5eef3; --bg:#f5f9fb; --line:#dfe7eb;}
+    :root[data-theme="mint"]{--accent:#2f7e5a; --accent-dark:#1f5c40; --accent-bg:#e2efe7; --bg:#f4f9f6; --line:#dde9e2;}
+    :root[data-theme="purple"]{--accent:#6f5ca3; --accent-dark:#4f4080; --accent-bg:#eae6f5; --bg:#f8f6fb; --line:#e2ddee;}
+    :root[data-theme="orange"]{--accent:#c08a2e; --accent-dark:#93681f; --accent-bg:#f6ecd8; --bg:#fdf9f1; --line:#efe3cc;}
   }
   @media (prefers-color-scheme: dark){
-    :root[data-theme="pink"]{--accent:#f28fb0; --accent-dark:#c2607f; --accent-bg:#3d2230; --on-accent:#25121a;}
-    :root[data-theme="blue"]{--accent:#7fb2f5; --accent-dark:#4f81c4; --accent-bg:#1f2c3f; --on-accent:#0f1826;}
-    :root[data-theme="mint"]{--accent:#6fd3ad; --accent-dark:#3f9b78; --accent-bg:#193229; --on-accent:#0d1f18;}
-    :root[data-theme="purple"]{--accent:#b797f0; --accent-dark:#8765c2; --accent-bg:#2c2240; --on-accent:#1a1228;}
-    :root[data-theme="orange"]{--accent:#f5a064; --accent-dark:#c2733d; --accent-bg:#3a2718; --on-accent:#24170c;}
+    :root[data-theme="pink"]{--accent:#d98fab; --accent-dark:#a85f79; --accent-bg:#3a2630; --on-accent:#241017;}
+    :root[data-theme="blue"]{--accent:#7fb0cf; --accent-dark:#4f7f9c; --accent-bg:#1f2c33; --on-accent:#0f1a1f;}
+    :root[data-theme="mint"]{--accent:#6bc79d; --accent-dark:#3f9570; --accent-bg:#1b2e24; --on-accent:#0d1a14;}
+    :root[data-theme="purple"]{--accent:#a496cf; --accent-dark:#7a69a8; --accent-bg:#272238; --on-accent:#161222;}
+    :root[data-theme="orange"]{--accent:#dcae5a; --accent-dark:#a9823c; --accent-bg:#372b16; --on-accent:#1f160a;}
   }
   .themeWrap{position:relative;}
   .themeBtn{width:40px; height:36px; padding:0; border-radius:20px; display:grid; place-items:center; background:var(--card);}
@@ -484,6 +484,42 @@
   .context-box{width:100%; max-width:560px; text-align:center; border-top:2px dashed var(--line);}
   .context-box .en{font-size:14.5px; margin-bottom:6px;}
   .context-box .jp{border-top:none; margin-top:0; padding-top:0; font-size:13.5px;}
+
+  /* ================= Narnia styling pass: storybook typography + wintry accents ================= */
+  /* English story quotes read like a printed English children's classic. */
+  .en, .flip-face.front .term, .backTerm{ font-family:"EB Garamond", Georgia, serif; }
+  .en{ font-style:italic; }
+  .flip-face.front .term{ font-style:normal; letter-spacing:0.01em; }
+  /* Japanese headings get an illuminated-manuscript serif instead of the
+     generic rounded UI face, so the chrome doesn't read as a stock app. */
+  .brandTitle, .heroGreet, .secHead, .chapTitle, .roundName{
+    font-family:"Shippori Mincho", "Hiragino Mincho ProN", serif;
+  }
+  .brandTitle{ font-weight:800; letter-spacing:0.02em; }
+  .heroGreet, .secHead, .chapTitle, .roundName{ font-weight:600; }
+  .chapTitleEn{ font-family:"EB Garamond", Georgia, serif; font-style:italic; }
+  /* A thin gold rule across the top of key cards, like a book's gilt edge,
+     plus a faint scatter of flecks (snow by day, stars by night). */
+  .hero, .roundCard{
+    border-top-width:3px;
+    border-top-color:var(--accent);
+    background:
+      radial-gradient(circle at 14% 22%, color-mix(in srgb, var(--ink) 18%, transparent) 0 1.6px, transparent 1.6px),
+      radial-gradient(circle at 46% 64%, color-mix(in srgb, var(--ink) 14%, transparent) 0 1.2px, transparent 1.2px),
+      radial-gradient(circle at 76% 28%, color-mix(in srgb, var(--ink) 16%, transparent) 0 1.6px, transparent 1.6px),
+      radial-gradient(circle at 86% 78%, color-mix(in srgb, var(--ink) 12%, transparent) 0 1.2px, transparent 1.2px),
+      radial-gradient(circle at 26% 86%, color-mix(in srgb, var(--ink) 12%, transparent) 0 1.2px, transparent 1.2px),
+      linear-gradient(135deg, var(--accent-bg), var(--card) 72%);
+  }
+  /* App bar: a faint night-sky glow behind the frosted blur. */
+  .appbar{
+    background-image:
+      radial-gradient(circle at 10% 30%, color-mix(in srgb, var(--accent) 16%, transparent) 0, transparent 55%),
+      radial-gradient(circle at 92% 20%, color-mix(in srgb, var(--accent) 10%, transparent) 0, transparent 50%);
+    background-color:color-mix(in srgb, var(--bg) 88%, transparent);
+    background-blend-mode:normal;
+  }
+  .logo svg{ filter:drop-shadow(0 2px 0 color-mix(in srgb, var(--accent-dark) 35%, transparent)) drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 35%, transparent)); }
 </style>
 </head>
 <body>
@@ -504,11 +540,11 @@
 </header>
 <div class="navHost">
   <nav class="nav" id="nav">
-    <button class="navItem" data-nav="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><span>ホーム</span></button>
+    <button class="navItem" data-nav="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="1"/><line x1="12" y1="2" x2="12" y2="22"/><circle cx="9.3" cy="12" r="0.9" fill="currentColor" stroke="none"/><circle cx="14.7" cy="12" r="0.9" fill="currentColor" stroke="none"/></svg><span>ホーム</span></button>
     <button class="navItem" data-nav="vocab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/><path d="M9 7h6"/></svg><span>単語</span></button>
-    <button class="navItem" data-nav="practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/></svg><span>練習</span></button>
+    <button class="navItem" data-nav="practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.2 7.8 14.1 14.1 7.8 16.2 9.9 9.9 16.2 7.8"/></svg><span>練習</span></button>
     <button class="navItem" data-nav="summary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14"/><path d="M15 6v14"/></svg><span>まとめ</span></button>
-    <button class="navItem" data-nav="review"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 5v6h-6"/></svg><span>復習</span><span class="badge" id="reviewBadge" style="display:none"></span></button>
+    <button class="navItem" data-nav="review"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><line x1="4.2" y1="7" x2="19.8" y2="17"/><line x1="4.2" y1="17" x2="19.8" y2="7"/><path d="M9 4.5l3 2 3-2"/><path d="M9 19.5l3-2 3 2"/></svg><span>復習</span><span class="badge" id="reviewBadge" style="display:none"></span></button>
   </nav>
 </div>
 <main class="wrap">
@@ -4394,7 +4430,14 @@ document.querySelectorAll('.navItem').forEach(n=> n.onclick = ()=> goTo(n.datase
 document.querySelectorAll('#practiceSeg button').forEach(b=> b.onclick = ()=> goTo('practice', b.dataset.p));
 
 // ---- theme colors ----
-const THEMES = [{"k": "brown", "label": "ブラウン", "color": "#8a5a3b", "dark": "#66401f"}, {"k": "pink", "label": "ピンク", "color": "#d9577f", "dark": "#ad3a60"}, {"k": "blue", "label": "ブルー", "color": "#3b7dd8", "dark": "#285ea9"}, {"k": "mint", "label": "ミント", "color": "#2f9e7a", "dark": "#1f7658"}, {"k": "purple", "label": "パープル", "color": "#8a5cd1", "dark": "#6a40ab"}, {"k": "orange", "label": "オレンジ", "color": "#e2742a", "dark": "#b3561a"}];
+const THEMES = [
+  {"k": "brown", "label": "🚪 ワードローブ", "color": "#8a5a3b", "dark": "#66401f"},
+  {"k": "pink", "label": "🍬 ターキッシュディライト", "color": "#b5567e", "dark": "#8a3a5c"},
+  {"k": "blue", "label": "❄️ 霜と氷", "color": "#3f7ea6", "dark": "#2a5e80"},
+  {"k": "mint", "label": "🌲 常春の森", "color": "#2f7e5a", "dark": "#1f5c40"},
+  {"k": "purple", "label": "🔮 白い魔女", "color": "#6f5ca3", "dark": "#4f4080"},
+  {"k": "orange", "label": "🦁 アスランの金", "color": "#c08a2e", "dark": "#93681f"}
+];
 const LION_SVG = "<svg viewBox=\"0 0 64 64\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><g fill=\"var(--accent-dark)\"><circle cx=\"53.0\" cy=\"33.0\" r=\"9\"/><circle cx=\"50.2\" cy=\"43.5\" r=\"9\"/><circle cx=\"42.5\" cy=\"51.2\" r=\"9\"/><circle cx=\"32.0\" cy=\"54.0\" r=\"9\"/><circle cx=\"21.5\" cy=\"51.2\" r=\"9\"/><circle cx=\"13.8\" cy=\"43.5\" r=\"9\"/><circle cx=\"11.0\" cy=\"33.0\" r=\"9\"/><circle cx=\"13.8\" cy=\"22.5\" r=\"9\"/><circle cx=\"21.5\" cy=\"14.8\" r=\"9\"/><circle cx=\"32.0\" cy=\"12.0\" r=\"9\"/><circle cx=\"42.5\" cy=\"14.8\" r=\"9\"/><circle cx=\"50.2\" cy=\"22.5\" r=\"9\"/></g><g fill=\"var(--accent)\"><circle cx=\"48.4\" cy=\"37.4\" r=\"7\"/><circle cx=\"44.0\" cy=\"45.0\" r=\"7\"/><circle cx=\"36.4\" cy=\"49.4\" r=\"7\"/><circle cx=\"27.6\" cy=\"49.4\" r=\"7\"/><circle cx=\"20.0\" cy=\"45.0\" r=\"7\"/><circle cx=\"15.6\" cy=\"37.4\" r=\"7\"/><circle cx=\"15.6\" cy=\"28.6\" r=\"7\"/><circle cx=\"20.0\" cy=\"21.0\" r=\"7\"/><circle cx=\"27.6\" cy=\"16.6\" r=\"7\"/><circle cx=\"36.4\" cy=\"16.6\" r=\"7\"/><circle cx=\"44.0\" cy=\"21.0\" r=\"7\"/><circle cx=\"48.4\" cy=\"28.6\" r=\"7\"/><circle cx=\"32\" cy=\"33\" r=\"19\"/></g><circle cx=\"19.5\" cy=\"21.5\" r=\"5.5\" fill=\"#ffd9a3\"/><circle cx=\"19.5\" cy=\"21.5\" r=\"2.8\" fill=\"#f2a877\"/><circle cx=\"44.5\" cy=\"21.5\" r=\"5.5\" fill=\"#ffd9a3\"/><circle cx=\"44.5\" cy=\"21.5\" r=\"2.8\" fill=\"#f2a877\"/><ellipse cx=\"32\" cy=\"35\" rx=\"15.5\" ry=\"14.5\" fill=\"#ffe3b8\"/><ellipse cx=\"25.5\" cy=\"32\" rx=\"2.3\" ry=\"2.9\" fill=\"#3a2718\"/><circle cx=\"26.3\" cy=\"31\" r=\"0.9\" fill=\"#fff\"/><ellipse cx=\"38.5\" cy=\"32\" rx=\"2.3\" ry=\"2.9\" fill=\"#3a2718\"/><circle cx=\"39.3\" cy=\"31\" r=\"0.9\" fill=\"#fff\"/><ellipse cx=\"21.5\" cy=\"38.5\" rx=\"3\" ry=\"2\" fill=\"#ff8fa3\" opacity=\".55\"/><ellipse cx=\"42.5\" cy=\"38.5\" rx=\"3\" ry=\"2\" fill=\"#ff8fa3\" opacity=\".55\"/><ellipse cx=\"32\" cy=\"40.5\" rx=\"6.5\" ry=\"5\" fill=\"#fff4e2\"/><path d=\"M29.2 36.8h5.6c.8 0 1.2.9.7 1.5l-2.8 2.6a1 1 0 0 1-1.4 0l-2.8-2.6c-.5-.6-.1-1.5.7-1.5z\" fill=\"#6b3a26\"/><path d=\"M32 40.6v1.6M32 42.2c-.9 1.6-2.9 1.9-4 .6M32 42.2c.9 1.6 2.9 1.9 4 .6\" fill=\"none\" stroke=\"#6b3a26\" stroke-width=\"1.2\" stroke-linecap=\"round\"/></svg>";
 function applyTheme(k){
   const t = THEMES.find(x=>x.k===k) || THEMES[0];
