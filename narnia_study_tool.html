@@ -4,66 +4,50 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ナルニア国物語 期末試験対策ツール</title>
-<meta name="theme-color" content="#8a5a3b">
+<meta name="theme-color" content="#141a2e">
 <link rel="icon" id="favicon" href="">
 <script>try{var t=localStorage.getItem("narnia-theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;800&family=Shippori+Mincho:wght@500;600;800&family=EB+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
 <style>
+  /* A permanent midnight-Narnia palette — a snowy night under the lamppost,
+     not a light/dark toggle. The theme picker only swaps the accent hue;
+     the night-sky base stays the same across every theme. */
   :root{
-    --bg:#faf8f4;
-    --card:#ffffff;
-    --ink:#2b2b28;
-    --sub:#6b6b64;
-    --line:#e4e0d6;
-    --accent:#8a5a3b;
-    --accent-dark:#66401f;
-    --accent-bg:#f3e6d8;
-    --on-accent:#ffffff;
-    --good:#3b6d11;
-    --good-dark:#2a5009;
-    --good-bg:#eaf3de;
-    --bad:#a32d2d;
-    --bad-dark:#7a2121;
-    --bad-bg:#fcebeb;
-    --warn:#e3a33b;
-    --mark:#fde68a;
-    --mark-ink:#3a2c00;
-    --ice:#9fc4dd;
-    --ice-bg:#eaf3fa;
-    --ice-crack:#5c7186;
-    color-scheme:light;
+    --bg:#141a2e;
+    --card:#1e2744;
+    --ink:#eef1fa;
+    --sub:#9aa4c4;
+    --line:#2c3657;
+    --accent:#c9935a;
+    --accent-dark:#8a5a2c;
+    --accent-bg:#2e2619;
+    --on-accent:#1b140c;
+    --good:#79c142;
+    --good-dark:#4f8a26;
+    --good-bg:#223119;
+    --bad:#f0766a;
+    --bad-dark:#b8483d;
+    --bad-bg:#3a2020;
+    --warn:#e8b04f;
+    --mark:#6b5410;
+    --mark-ink:#fff4cc;
+    --ice:#6f93c2;
+    --ice-bg:#1e2a44;
+    --ice-crack:#aac4e6;
+    color-scheme:dark;
     font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
   }
-  @media (prefers-color-scheme: dark){
-    :root{
-      --bg:#17140f;
-      --card:#231f19;
-      --ink:#f1ebe3;
-      --sub:#b1a797;
-      --line:#3a332a;
-      --accent:#d6a077;
-      --accent-dark:#9c6b45;
-      --accent-bg:#3a2d22;
-      --on-accent:#1b1510;
-      --good:#79c142;
-      --good-dark:#4f8a26;
-      --good-bg:#223119;
-      --bad:#f0766a;
-      --bad-dark:#b8483d;
-      --bad-bg:#3a2020;
-      --warn:#e8b04f;
-      --mark:#6b5410;
-      --mark-ink:#fff4cc;
-      --ice:#4f6a86;
-      --ice-bg:#1b2836;
-      --ice-crack:#9fc4dd;
-      color-scheme:dark;
-    }
-  }
   *{box-sizing:border-box;}
-  body{margin:0; background:var(--bg); color:var(--ink); line-height:1.7;}
+  body{
+    margin:0; color:var(--ink); line-height:1.7; min-height:100vh;
+    background:
+      radial-gradient(1100px 650px at 50% -8%, color-mix(in srgb, var(--accent) 16%, var(--card)) 0%, transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, color-mix(in srgb, var(--ice) 14%, transparent) 0%, transparent 55%),
+      var(--bg);
+    background-attachment:fixed;
+  }
   .wrap{max-width:780px; margin:0 auto; padding:24px 16px 60px;}
   h1{font-size:20px; font-weight:600; margin:0 0 4px;}
   .lead{color:var(--sub); font-size:13px; margin:0 0 20px;}
@@ -87,7 +71,7 @@
   .stat{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:10px 14px; font-size:13px; flex:1; min-width:100px; transition:transform 0.15s;}
   .stat:hover{transform:translateY(-2px);}
   .stat b{display:block; font-size:20px; font-weight:600; margin-top:2px;}
-  mark{background:var(--mark); color:#3a2c00; padding:0 2px; border-radius:2px;}
+  mark{background:var(--mark); color:var(--mark-ink); padding:0 2px; border-radius:2px;}
   u{text-decoration-color:var(--accent); text-decoration-thickness:2px;}
   .en{font-size:16px; margin-bottom:14px;}
   .jp{font-size:15px; color:var(--sub); border-top:1px dashed var(--line); padding-top:12px; margin-top:12px;}
@@ -182,7 +166,7 @@
   .s1800SetSub{font-size:11.5px; color:var(--sub);}
   .s1800Status{display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; margin-top:6px;}
   .s1800Status.notyet{background:var(--line); color:var(--sub);}
-  .s1800Status.confirm{background:#fdf0d5; color:#a3702d;}
+  .s1800Status.confirm{background:var(--warn); color:var(--on-accent);}
   .s1800Status.cleared{background:var(--good-bg); color:var(--good);}
   .s1800LevelHead{font-size:15px; font-weight:700; margin:18px 0 10px;}
   .s1800LevelHead:first-child{margin-top:0;}
@@ -196,7 +180,7 @@
   .iceCard{position:relative;}
   .iceStatus{font-size:13px; font-weight:700; padding:6px 10px; border-radius:8px; margin-bottom:12px; display:inline-block;}
   .iceStatus.frozen{background:var(--ice-bg); color:var(--ice-crack);}
-  .iceStatus.cracked{background:#fdf0d5; color:#a3702d;}
+  .iceStatus.cracked{background:var(--warn); color:var(--on-accent);}
   @keyframes iceShatterAnim{
     0%{ transform:scale(1); filter:brightness(1); }
     30%{ transform:scale(1.02); filter:brightness(1.15); }
@@ -231,9 +215,9 @@
   .heatGrid{display:flex; gap:3px;}
   .heatCol{display:flex; flex-direction:column; gap:3px;}
   .heatCell{width:12px; height:12px; border-radius:3px; background:var(--line);}
-  .heatCell.lvl1{background:#e8d2bb;}
-  .heatCell.lvl2{background:#d9ab7c;}
-  .heatCell.lvl3{background:#b97b4c;}
+  .heatCell.lvl1{background:#4a3c22;}
+  .heatCell.lvl2{background:#7a5f30;}
+  .heatCell.lvl3{background:#a8803f;}
   .heatCell.lvl4{background:var(--accent);}
   .heatCell.lvlpad{background:transparent;}
   .heatLegend{display:flex; align-items:center; gap:4px; font-size:11px; color:var(--sub); margin-top:10px;}
@@ -499,24 +483,16 @@
   .tq.review.ok .tqMark{color:var(--good);} .tq.review.ng .tqMark{color:var(--bad);}
   @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} .ringArc{stroke-dashoffset:var(--to);} }
 
-  /* -- theme colours (user-selectable) -- */
-  @media not (prefers-color-scheme: dark){
-    :root[data-theme="pink"]{--accent:#b5567e; --accent-dark:#8a3a5c; --accent-bg:#f6e8ee; --bg:#fdf8fa; --line:#efe1e7;}
-    :root[data-theme="blue"]{--accent:#3f7ea6; --accent-dark:#2a5e80; --accent-bg:#e5eef3; --bg:#f5f9fb; --line:#dfe7eb;}
-    :root[data-theme="mint"]{--accent:#2f7e5a; --accent-dark:#1f5c40; --accent-bg:#e2efe7; --bg:#f4f9f6; --line:#dde9e2;}
-    :root[data-theme="purple"]{--accent:#6f5ca3; --accent-dark:#4f4080; --accent-bg:#eae6f5; --bg:#f8f6fb; --line:#e2ddee;}
-    :root[data-theme="orange"]{--accent:#c08a2e; --accent-dark:#93681f; --accent-bg:#f6ecd8; --bg:#fdf9f1; --line:#efe3cc;}
-  }
-  @media (prefers-color-scheme: dark){
-    :root[data-theme="pink"]{--accent:#d98fab; --accent-dark:#a85f79; --accent-bg:#3a2630; --on-accent:#241017;}
-    :root[data-theme="blue"]{--accent:#7fb0cf; --accent-dark:#4f7f9c; --accent-bg:#1f2c33; --on-accent:#0f1a1f;}
-    :root[data-theme="mint"]{--accent:#6bc79d; --accent-dark:#3f9570; --accent-bg:#1b2e24; --on-accent:#0d1a14;}
-    :root[data-theme="purple"]{--accent:#a496cf; --accent-dark:#7a69a8; --accent-bg:#272238; --on-accent:#161222;}
-    :root[data-theme="orange"]{--accent:#dcae5a; --accent-dark:#a9823c; --accent-bg:#372b16; --on-accent:#1f160a;}
-  }
+  /* -- theme colours: each swatch only swaps the accent hue, the night-sky
+     base (--bg/--card/--line) stays the same across every theme -- */
+  :root[data-theme="pink"]{--accent:#d98fab; --accent-dark:#a85f79; --accent-bg:#3a2630; --on-accent:#241017;}
+  :root[data-theme="blue"]{--accent:#7fb0cf; --accent-dark:#4f7f9c; --accent-bg:#1f2c33; --on-accent:#0f1a1f;}
+  :root[data-theme="mint"]{--accent:#6bc79d; --accent-dark:#3f9570; --accent-bg:#1b2e24; --on-accent:#0d1a14;}
+  :root[data-theme="purple"]{--accent:#a496cf; --accent-dark:#7a69a8; --accent-bg:#272238; --on-accent:#161222;}
+  :root[data-theme="orange"]{--accent:#dcae5a; --accent-dark:#a9823c; --accent-bg:#372b16; --on-accent:#1f160a;}
   .themeWrap{position:relative;}
   .themeBtn{width:36px; height:32px; padding:0; border-radius:999px; display:grid; place-items:center; background:var(--accent-bg); box-shadow:none;}
-  .themeDot{width:16px; height:16px; border-radius:50%; background:conic-gradient(#b5567e 0 25%, #3f7ea6 0 50%, #2f7e5a 0 75%, #c08a2e 0); box-shadow:0 0 0 2px var(--card), 0 0 0 3px var(--accent);}
+  .themeDot{width:16px; height:16px; border-radius:50%; background:conic-gradient(#d98fab 0 25%, #7fb0cf 0 50%, #6bc79d 0 75%, #dcae5a 0); box-shadow:0 0 0 2px var(--card), 0 0 0 3px var(--accent);}
   .pop{position:absolute; top:calc(100% + 8px); right:0; z-index:70; background:var(--card); border:1px solid var(--line); border-radius:14px; box-shadow:0 10px 30px rgba(0,0,0,0.14); padding:12px; display:none;}
   .pop.open{display:block;}
   .popTitle{font-family:"Shippori Mincho", serif; font-size:12px; font-weight:600; color:var(--sub); margin:0 4px 8px;}
@@ -4450,12 +4426,12 @@ document.querySelectorAll('#practiceSeg button').forEach(b=> b.onclick = ()=> go
 
 // ---- theme colors ----
 const THEMES = [
-  {"k": "brown", "label": "🚪 ワードローブ", "color": "#8a5a3b", "dark": "#66401f"},
-  {"k": "pink", "label": "🍬 ターキッシュディライト", "color": "#b5567e", "dark": "#8a3a5c"},
-  {"k": "blue", "label": "❄️ 霜と氷", "color": "#3f7ea6", "dark": "#2a5e80"},
-  {"k": "mint", "label": "🌲 常春の森", "color": "#2f7e5a", "dark": "#1f5c40"},
-  {"k": "purple", "label": "🔮 白い魔女", "color": "#6f5ca3", "dark": "#4f4080"},
-  {"k": "orange", "label": "🦁 アスランの金", "color": "#c08a2e", "dark": "#93681f"}
+  {"k": "brown", "label": "🚪 ワードローブ", "color": "#c9935a", "dark": "#8a5a2c"},
+  {"k": "pink", "label": "🍬 ターキッシュディライト", "color": "#d98fab", "dark": "#a85f79"},
+  {"k": "blue", "label": "❄️ 霜と氷", "color": "#7fb0cf", "dark": "#4f7f9c"},
+  {"k": "mint", "label": "🌲 常春の森", "color": "#6bc79d", "dark": "#3f9570"},
+  {"k": "purple", "label": "🔮 白い魔女", "color": "#a496cf", "dark": "#7a69a8"},
+  {"k": "orange", "label": "🦁 アスランの金", "color": "#dcae5a", "dark": "#a9823c"}
 ];
 const LION_SVG = "<svg viewBox=\"0 0 64 64\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><g fill=\"var(--accent-dark)\"><circle cx=\"53.0\" cy=\"33.0\" r=\"9\"/><circle cx=\"50.2\" cy=\"43.5\" r=\"9\"/><circle cx=\"42.5\" cy=\"51.2\" r=\"9\"/><circle cx=\"32.0\" cy=\"54.0\" r=\"9\"/><circle cx=\"21.5\" cy=\"51.2\" r=\"9\"/><circle cx=\"13.8\" cy=\"43.5\" r=\"9\"/><circle cx=\"11.0\" cy=\"33.0\" r=\"9\"/><circle cx=\"13.8\" cy=\"22.5\" r=\"9\"/><circle cx=\"21.5\" cy=\"14.8\" r=\"9\"/><circle cx=\"32.0\" cy=\"12.0\" r=\"9\"/><circle cx=\"42.5\" cy=\"14.8\" r=\"9\"/><circle cx=\"50.2\" cy=\"22.5\" r=\"9\"/></g><g fill=\"var(--accent)\"><circle cx=\"48.4\" cy=\"37.4\" r=\"7\"/><circle cx=\"44.0\" cy=\"45.0\" r=\"7\"/><circle cx=\"36.4\" cy=\"49.4\" r=\"7\"/><circle cx=\"27.6\" cy=\"49.4\" r=\"7\"/><circle cx=\"20.0\" cy=\"45.0\" r=\"7\"/><circle cx=\"15.6\" cy=\"37.4\" r=\"7\"/><circle cx=\"15.6\" cy=\"28.6\" r=\"7\"/><circle cx=\"20.0\" cy=\"21.0\" r=\"7\"/><circle cx=\"27.6\" cy=\"16.6\" r=\"7\"/><circle cx=\"36.4\" cy=\"16.6\" r=\"7\"/><circle cx=\"44.0\" cy=\"21.0\" r=\"7\"/><circle cx=\"48.4\" cy=\"28.6\" r=\"7\"/><circle cx=\"32\" cy=\"33\" r=\"19\"/></g><circle cx=\"19.5\" cy=\"21.5\" r=\"5.5\" fill=\"#ffd9a3\"/><circle cx=\"19.5\" cy=\"21.5\" r=\"2.8\" fill=\"#f2a877\"/><circle cx=\"44.5\" cy=\"21.5\" r=\"5.5\" fill=\"#ffd9a3\"/><circle cx=\"44.5\" cy=\"21.5\" r=\"2.8\" fill=\"#f2a877\"/><ellipse cx=\"32\" cy=\"35\" rx=\"15.5\" ry=\"14.5\" fill=\"#ffe3b8\"/><ellipse cx=\"25.5\" cy=\"32\" rx=\"2.3\" ry=\"2.9\" fill=\"#3a2718\"/><circle cx=\"26.3\" cy=\"31\" r=\"0.9\" fill=\"#fff\"/><ellipse cx=\"38.5\" cy=\"32\" rx=\"2.3\" ry=\"2.9\" fill=\"#3a2718\"/><circle cx=\"39.3\" cy=\"31\" r=\"0.9\" fill=\"#fff\"/><ellipse cx=\"21.5\" cy=\"38.5\" rx=\"3\" ry=\"2\" fill=\"#ff8fa3\" opacity=\".55\"/><ellipse cx=\"42.5\" cy=\"38.5\" rx=\"3\" ry=\"2\" fill=\"#ff8fa3\" opacity=\".55\"/><ellipse cx=\"32\" cy=\"40.5\" rx=\"6.5\" ry=\"5\" fill=\"#fff4e2\"/><path d=\"M29.2 36.8h5.6c.8 0 1.2.9.7 1.5l-2.8 2.6a1 1 0 0 1-1.4 0l-2.8-2.6c-.5-.6-.1-1.5.7-1.5z\" fill=\"#6b3a26\"/><path d=\"M32 40.6v1.6M32 42.2c-.9 1.6-2.9 1.9-4 .6M32 42.2c.9 1.6 2.9 1.9 4 .6\" fill=\"none\" stroke=\"#6b3a26\" stroke-width=\"1.2\" stroke-linecap=\"round\"/></svg>";
 function applyTheme(k){
