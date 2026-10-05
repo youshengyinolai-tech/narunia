@@ -227,6 +227,9 @@
   /* ---- Always-on daily widget bar (collapsible calendar beneath) ---- */
   #dailyWidget{margin-bottom:16px;}
   .dailyWidgetCard{padding:0; overflow:hidden;}
+  /* nested inside .hero: blend in as a footer strip instead of a stray card */
+  .hero #dailyWidget{margin:14px -20px -20px;}
+  .hero .dailyWidgetCard{background:transparent; box-shadow:none; border:none; border-top:1px dashed color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius:0;}
   .dailyBar{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 16px; cursor:pointer; user-select:none;}
   .dailyBar:hover{background:var(--accent-bg);}
   .dailyBarStats{font-size:13px; color:var(--ink);}
@@ -375,6 +378,8 @@
   .roundBtns button{padding:9px 4px; font-size:12px;}
   @media (max-width:420px){ .roundBtns{grid-template-columns:repeat(2,1fr);} }
   .roundCard{border-top:2px solid var(--accent);}
+  .roundGrid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:4px;}
+  @media (max-width:720px){ .roundGrid{grid-template-columns:1fr;} }
   .tileGrid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px;}
   @media (max-width:560px){ .tileGrid{grid-template-columns:repeat(2,1fr);} }
   .tile{display:flex; flex-direction:column; align-items:flex-start; gap:3px; padding:14px; border-radius:12px; text-align:left; background:var(--card); border:1px solid var(--line); box-shadow:0 1px 2px rgba(0,0,0,0.03);}
@@ -4321,8 +4326,8 @@ function renderHome(){
     {g:'map', icon:'🗺️', name:'ナルニアの地図'},
     {g:'recap', icon:'📘', name:'前期ふりかえり'},
   ];
-  const recent = store.data.testHistory.slice(-3).reverse();
   const sems = [{k:'zenki', label:'📘 前期'}, {k:'kouki', label:'📗 後期'}];
+  const content = [...practice.map(x=>({...x, kind:'p'})), ...extra.map(x=>({...x, kind:'g'}))];
   area.innerHTML = `
     <div class="card hero">
       <div class="heroTop">
@@ -4333,11 +4338,13 @@ function renderHome(){
         <div class="heroFlame ${todayDone?'lit':''}">🔥<span>${n}</span></div>
       </div>
       <button class="primary big block" id="homeStart">${VOCAB.length ? '単語の学習をはじめる' : 'まだ単語がありません'}</button>
+      <div id="dailyWidget"></div>
     </div>
 
-    <div id="dailyWidget"></div>
+    ${wrongTotal ? `<button class="card reviewCta" id="homeReview"><span class="tileIcon">🔁</span><span><b>苦手問題が ${wrongTotal}件 あります</b><br><small>復習して弱点をなくしましょう</small></span><span class="chev">›</span></button>` : ''}
 
     <div class="secHead">授業の学期</div>
+    <div class="roundGrid">
     ${sems.map(s=>{
       const stt = semesterStats(s.k);
       const pm = stt.total ? stt.mastered/stt.total*100 : 0, pl = stt.total ? stt.learning/stt.total*100 : 0;
@@ -4356,23 +4363,15 @@ function renderHome(){
         </div>
       </div>`;
     }).join('')}
-
-    <div class="secHead">練習問題</div>
-    <div class="tileGrid">
-      ${practice.map(x=>`<button class="tile" data-p="${x.p}"><span class="tileIcon">${x.icon}</span><span class="tileName">${x.name}</span><span class="tileSub">${x.n ? x.n+'問' : '準備中'}</span></button>`).join('')}
     </div>
 
-    <div class="secHead">その他のコンテンツ</div>
+    <div class="secHead">コンテンツ</div>
     <div class="tileGrid">
-      ${extra.map(x=>`<button class="tile" data-g="${x.g}"><span class="tileIcon">${x.icon}</span><span class="tileName">${x.name}</span></button>`).join('')}
+      ${content.map(x=>`<button class="tile" data-${x.kind==='p'?'p':'g'}="${x.kind==='p'?x.p:x.g}"><span class="tileIcon">${x.icon}</span><span class="tileName">${x.name}</span><span class="tileSub">${x.n ? x.n+'問' : ''}</span></button>`).join('')}
     </div>
-
-    ${wrongTotal ? `<button class="card reviewCta" id="homeReview"><span class="tileIcon">🔁</span><span><b>苦手問題が ${wrongTotal}件 あります</b><br><small>復習して弱点をなくしましょう</small></span><span class="chev">›</span></button>` : ''}
 
     <div class="secHead">成績</div>
     <div class="statrow" id="statrow"></div>
-
-    ${recent.length ? `<div class="secHead">最近の単語テスト</div><div class="card">${recent.map(hh=>`<div class="histRow"><span>${new Date(hh.ts).toLocaleDateString('ja-JP',{month:'numeric',day:'numeric'})}・${hh.semester==='kouki'?'後期':(hh.semester==='zenki'?'前期':'全期間')}</span><span>${hh.correct} / ${hh.total}</span><b class="${hh.pct>=80?'goodTxt':(hh.pct<50?'badTxt':'')}">${hh.pct}%</b></div>`).join('')}</div>` : ''}
   `;
   updateStats();
   document.getElementById('homeStart').onclick = ()=>{ if(VOCAB.length) goTo('vocab','learn'); };
